@@ -67,6 +67,11 @@ class GetTokenBalanceSuccess {
   GetTokenBalanceSuccess(this.tokenBalance);
 }
 
+class GetSecondaryTokenBalanceSuccess {
+  final BigInt balance;
+  GetSecondaryTokenBalanceSuccess(this.balance);
+}
+
 class SendTokenSuccess {
   final String txHash;
   SendTokenSuccess(this.txHash);
@@ -105,7 +110,8 @@ class SwitchCommunitySuccess {
   final Plugins plugins;
   final String homeBridgeAddress;
   final String foreignBridgeAddress;
-  SwitchCommunitySuccess({this.communityAddress, this.communityName, this.token,
+  final String secondaryTokenAddress;
+  SwitchCommunitySuccess({this.communityAddress, this.communityName, this.token,this.secondaryTokenAddress,
       this.transactions, this.plugins, this.isClosed, this.homeBridgeAddress, this.foreignBridgeAddress});
 }
 
@@ -493,7 +499,7 @@ ThunkAction generateWalletSuccessCall(dynamic walletData, String accountAddress)
           store.dispatch(segmentIdentifyCall(
               new Map<String, dynamic>.from({
                 "Wallet Generated": true,
-                "App name": 'Fuse',
+                "App name": 'Seedbed',
                 "Phone Number": fullPhoneNumber,
                 "Wallet Address": store.state.cashWalletState.walletAddress,
                 "Account Address": store.state.userState.accountAddress,
@@ -543,7 +549,15 @@ ThunkAction getTokenBalanceCall(String tokenAddress) {
       String communityAddress = store.state.cashWalletState.communityAddress;
       Community community = store.state.cashWalletState.communities[communityAddress];
       String balance = formatValue(tokenBalance, community.token.decimals);
-
+      if (community.secondaryTokenAddress != null && community.secondaryTokenAddress != '') {
+        BigInt secondaryTokenBalance = (await graph.getTokenBalance(walletAddress, community.secondaryTokenAddress));
+        String balance = formatValue(secondaryTokenBalance, community.token.decimals);
+        store.dispatch(new GetSecondaryTokenBalanceSuccess(secondaryTokenBalance));
+        store.dispatch(segmentIdentifyCall(Map<String, dynamic>.from({
+          'Secondary token - ${community.name} Balance': balance,
+          "Secondary token Display Balance": balance
+        })));
+      }
       store.dispatch(new GetTokenBalanceSuccess(tokenBalance));
       store.dispatch(new UpdateDisplayBalance(int.parse(balance)));
       store.dispatch(segmentIdentifyCall(Map<String, dynamic>.from({
@@ -969,6 +983,7 @@ ThunkAction switchToNewCommunityCall(String communityAddress) {
       store.dispatch(getBusinessListCall());
       String homeBridgeAddress = communityData['homeBridgeAddress'];
       String foreignBridgeAddress = communityData['foreignBridgeAddress'];
+      String secondaryTokenAddress = communityData['secondaryTokenAddress'] ?? '';
       store.dispatch(new SwitchCommunitySuccess(
           communityAddress: communityAddress,
           communityName: community["name"],
@@ -982,7 +997,8 @@ ThunkAction switchToNewCommunityCall(String communityAddress) {
           plugins: communityPlugins,
           isClosed: communityData['isClosed'],
           homeBridgeAddress: homeBridgeAddress,
-          foreignBridgeAddress: foreignBridgeAddress
+          foreignBridgeAddress: foreignBridgeAddress,
+          secondaryTokenAddress: secondaryTokenAddress
           ));
       store.dispatch(segmentTrackCall("Wallet: Switch Community",
           properties: new Map<String, dynamic>.from({
@@ -1014,6 +1030,7 @@ ThunkAction switchToExisitingCommunityCall(String communityAddress) {
       store.dispatch(getBusinessListCall());
       String homeBridgeAddress = communityData['homeBridgeAddress'];
       String foreignBridgeAddress = communityData['foreignBridgeAddress'];
+      String secondaryTokenAddress = communityData['secondaryTokenAddress'] ?? '';
       store.dispatch(new SwitchCommunitySuccess(
           communityAddress: communityAddress,
           communityName: current.name,
@@ -1022,7 +1039,8 @@ ThunkAction switchToExisitingCommunityCall(String communityAddress) {
           plugins: communityPlugins,
           isClosed: current.isClosed,
           homeBridgeAddress: homeBridgeAddress,
-          foreignBridgeAddress: foreignBridgeAddress
+          foreignBridgeAddress: foreignBridgeAddress,
+          secondaryTokenAddress: secondaryTokenAddress
           ));
     } catch (e, s) {
       logger.info('ERROR - switchToExisitingCommunityCall $e');

@@ -27,20 +27,17 @@ class ShowMnemonic extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                   child: RichText(
                       textAlign: TextAlign.center,
-                      text: new TextSpan(
-                          style: Theme.of(context).textTheme.title,
-                          children: <InlineSpan>[
-                            TextSpan(
-                              text: I18n.of(context).important + ' ',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            TextSpan(
-                                text: I18n.of(context).write_words,
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary))
-                          ])),
+                      text: new TextSpan(children: <InlineSpan>[
+                        TextSpan(
+                          text: I18n.of(context).important + ' ',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                        TextSpan(
+                            text: I18n.of(context).write_words,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                fontSize: 16))
+                      ])),
                 )
               ],
             ),

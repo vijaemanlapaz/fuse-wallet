@@ -126,14 +126,14 @@ class _PrizeScreenState extends State<PrizeScreen> {
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return new MainScaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               title: '',
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(top: 20), child: Preloader())
               ]);
         } else if (snapshot.hasError) {
           return new MainScaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               title: '',
               children: <Widget>[
                 Padding(
@@ -154,7 +154,7 @@ class _PrizeScreenState extends State<PrizeScreen> {
           Function currentAmountCb =
               add(double.parse(drawInfo.reward['amount']));
           return MainScaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: '',
             children: <Widget>[
               Container(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fusecash/models/pro/token.dart';
 import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
 import 'package:fusecash/utils/addresses.dart';
-import 'package:fusecash/widgets/coming_soon.dart';
+// import 'package:fusecash/widgets/coming_soon.dart';
 import 'package:redux/redux.dart';
 import 'package:fusecash/generated/i18n.dart';
 import 'package:fusecash/models/app_state.dart';
@@ -16,7 +16,8 @@ class ProHeader extends StatelessWidget {
     return new StoreConnector<AppState, _ProHeaderViewModel>(
         converter: _ProHeaderViewModel.fromStore,
         onWillChange: (prevVm, nextVm) {
-          if (nextVm.daiToken.address != null && nextVm.daiToken.address != '') {
+          if (nextVm.daiToken.address != null &&
+              nextVm.daiToken.address != '') {
             String name = nextVm.daiToken.name;
             nextVm.idenyifyCall(Map<String, dynamic>.from({
               "$name balance": nextVm.daiToken.amount,
@@ -73,7 +74,6 @@ class ProHeader extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 0.0),
                     child: new RichText(
                       text: new TextSpan(
-                        style: Theme.of(context).textTheme.title,
                         children: <TextSpan>[
                           new TextSpan(
                               text: I18n.of(context).hi,
@@ -147,7 +147,13 @@ class ProHeader extends StatelessWidget {
                                 ],
                               ),
                               onPressed: () {
-                                comingSoon(context);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: new Text(
+                                    "Coming soon",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ));
                               },
                               child: Image.asset(
                                 'assets/images/scan.png',

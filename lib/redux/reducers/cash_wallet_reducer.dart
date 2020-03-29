@@ -18,6 +18,8 @@ final cashWalletReducers = combineReducers<CashWalletState>([
   TypedReducer<CashWalletState, CreateAccountWalletSuccess>(_createAccountWalletSuccess),
   TypedReducer<CashWalletState, GetTokenBalanceSuccess>(
       _getTokenBalanceSuccess),
+  TypedReducer<CashWalletState, GetSecondaryTokenBalanceSuccess>(
+      _getSecondaryTokenBalanceSuccess),
   TypedReducer<CashWalletState, SendTokenSuccess>(_sendTokenSuccess),
   TypedReducer<CashWalletState, JoinCommunitySuccess>(_joinCommunitySuccess),
   TypedReducer<CashWalletState, FetchCommunityMetadataSuccess>(_fetchCommunityMetadataSuccess),
@@ -107,6 +109,19 @@ final cashWalletReducers = combineReducers<CashWalletState>([
   CashWalletState _createAccountWalletSuccess(CashWalletState state, CreateAccountWalletSuccess action) {
     return state.copyWith(walletStatus: 'deploying');
   }
+
+  CashWalletState _getSecondaryTokenBalanceSuccess(
+      CashWalletState state, GetSecondaryTokenBalanceSuccess action) {
+    if (state.walletAddress != '') {
+      Community current = state.communities[state.communityAddress];
+      Community newCommunity = current.copyWith(secondaryTokenBalance: action.balance);
+      Map<String, Community> newOne = Map<String, Community>.from(state.communities);
+      newOne[state.communityAddress] = newCommunity;
+      return state.copyWith(communities: newOne);
+    } else {
+      return state;
+    }
+  }
   
   CashWalletState _getTokenBalanceSuccess(
       CashWalletState state, GetTokenBalanceSuccess action) {
@@ -166,7 +181,8 @@ final cashWalletReducers = combineReducers<CashWalletState>([
       name: action.communityName,
       isClosed: action.isClosed,
       homeBridgeAddress: action.homeBridgeAddress,
-      foreignBridgeAddress: action.foreignBridgeAddress
+      foreignBridgeAddress: action.foreignBridgeAddress,
+      secondaryTokenAddress: action.secondaryTokenAddress
     );
     Map<String, Community> newOne =
         Map<String, Community>.from(state.communities);

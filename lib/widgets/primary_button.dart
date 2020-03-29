@@ -44,8 +44,6 @@ class PrimaryButton extends StatelessWidget {
         child: InkWell(
             onTap: onPressed,
             borderRadius: new BorderRadius.all(new Radius.circular(30.0)),
-            //hoverColor: Colors.red,
-            //focusColor: Colors.red,
             highlightColor:
                 Theme.of(context).scaffoldBackgroundColor.withOpacity(0.3),
             splashColor:
@@ -55,16 +53,15 @@ class PrimaryButton extends StatelessWidget {
                   ? Text(
                       label,
                       style: TextStyle(
-                          color: labalColor ??
-                              Theme.of(context).textTheme.button.color,
+                          color: labalColor ?? Colors.white,
                           fontSize: this.fontSize ?? 18,
                           fontWeight: this.labelFontWeight ?? FontWeight.w700),
                     )
                   : Container(
                       child: CircularProgressIndicator(
                           strokeWidth: 3,
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).primaryColor)),
+                          valueColor:
+                              new AlwaysStoppedAnimation<Color>(Colors.white)),
                       width: 21.0,
                       height: 21.0,
                       margin: EdgeInsets.only(left: 28, right: 28),

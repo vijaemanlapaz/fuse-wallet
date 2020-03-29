@@ -21,7 +21,7 @@ import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  String configFile = String.fromEnvironment('CONFIG_FILE', defaultValue: '.env_prod');
+  String configFile = String.fromEnvironment('CONFIG_FILE', defaultValue: '.env_seedbed');
   await DotEnv().load(configFile);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runZoned<Future<void>>(() async => runApp(await customThemeApp()),
@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> {
             return new Column(children: <Widget>[
               Expanded(
                   child: MaterialApp(
-                title: 'Fuse Cash',
+                title: 'Seedbed wallet',
                 initialRoute: isProMode
                     ? ProRouter.proModeHomeScreen
                     : widget.initialRoute,

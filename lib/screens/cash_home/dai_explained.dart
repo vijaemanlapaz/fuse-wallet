@@ -91,10 +91,7 @@ class _DaiExplainedScreenState extends State<DaiExplainedScreen> {
                                   'Win up to 100 points!',
                                   style: TextStyle(
                                       fontSize: 13,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .headline
-                                          .color),
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
                               Row(
@@ -249,9 +246,7 @@ class _DaiExplainedScreenState extends State<DaiExplainedScreen> {
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Theme.of(context)
-                                        .textTheme
-                                        .headline
-                                        .color,
+                                        .primaryColor,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -295,9 +290,7 @@ class _DaiExplainedScreenState extends State<DaiExplainedScreen> {
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Theme.of(context)
-                                        .textTheme
-                                        .headline
-                                        .color,
+                                        .primaryColor,
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(

@@ -15,7 +15,9 @@ class Community {
   final String address;
   final String homeBridgeAddress;
   final String foreignBridgeAddress;
+  final String secondaryTokenAddress;
   final BigInt tokenBalance;
+  final BigInt secondaryTokenBalance;
   final bool isMember;
   final List<Business> businesses;
   final Transactions transactions;
@@ -40,7 +42,9 @@ class Community {
       this.jobs,
       this.metadata,
       this.homeBridgeAddress,
-      this.foreignBridgeAddress});
+      this.foreignBridgeAddress,
+      this.secondaryTokenAddress,
+      this.secondaryTokenBalance});
 
   static List<Job> _jobsFromJson(Map<String, dynamic> json) =>
       List<Job>.from(json['jobs'].map((job) => JobFactory.create(job)));
@@ -56,6 +60,8 @@ class Community {
         address: null,
         foreignBridgeAddress: null,
         homeBridgeAddress: null,
+        secondaryTokenAddress: null,
+        secondaryTokenBalance: BigInt.from(0),
         token: null,
         isMember: false,
         tokenBalance: BigInt.from(0),
@@ -70,10 +76,12 @@ class Community {
     String address,
     String foreignBridgeAddress,
     String homeBridgeAddress,
+    String secondaryTokenAddress,
     Plugins plugins,
     Token token,
     Transactions transactions,
     BigInt tokenBalance,
+    BigInt secondaryTokenBalance,
     List<Business> businesses,
     List<Job> jobs,
     bool isMember,
@@ -87,7 +95,9 @@ class Community {
         address: address ?? this.address,
         name: name ?? this.name,
         plugins: plugins ?? this.plugins,
+        secondaryTokenAddress: secondaryTokenAddress ?? this.secondaryTokenAddress,
         token: token ?? this.token,
+        secondaryTokenBalance: secondaryTokenBalance ?? this.secondaryTokenBalance,
         businesses: businesses ?? this.businesses,
         isMember: isMember ?? this.isMember,
         jobs: jobs ?? this.jobs,
