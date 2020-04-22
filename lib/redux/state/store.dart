@@ -256,6 +256,7 @@ class AppFactory {
             environment: DotEnv().env['MODE'],
             contexts: new Contexts(
                 device: device,
+                app: App(name: 'Seedbed'),
                 operatingSystem: operatingSystem
             ),
             userContext: user

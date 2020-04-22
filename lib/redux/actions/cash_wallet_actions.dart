@@ -1101,8 +1101,8 @@ ThunkAction getBusinessListCall() {
               'name': data['name'] ?? '',
               'account': data['account'] ?? '',
               'metadata': {
-                'image': data['image'][0]['url'] ?? '',
-                "coverPhoto": data['coverPhoto'][0]['url'] ?? '',
+                'image': data['image'] != null ? data['image'][0]['url'] : '',
+                "coverPhoto": data['coverPhoto'] != null ? data['coverPhoto'][0]['url'] : '',
                 'address': data['address'] ?? '',
                 'description': data['description'] ?? '',
                 'phoneNumber': data['phoneNumber'] ?? '',
