@@ -6,8 +6,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebViewPageArguments {
   final String url;
   final String title;
+  final bool withBack;
 
-  WebViewPageArguments({this.title, this.url});
+  WebViewPageArguments({this.title, this.url, this.withBack = true});
 }
 
 class WebViewPage extends StatefulWidget {
@@ -17,7 +18,6 @@ class WebViewPage extends StatefulWidget {
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
-
 }
 
 class _WebViewPageState extends State<WebViewPage> {
@@ -77,16 +77,18 @@ class _WebViewPageState extends State<WebViewPage> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.w800))
                             ]),
-                        Positioned(
-                            top: 60,
-                            left: 20,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child:
-                                  SvgPicture.asset('assets/images/arrow.svg'),
-                            )),
+                        webPageArgs.withBack
+                            ? Positioned(
+                                top: 60,
+                                left: 20,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: SvgPicture.asset(
+                                      'assets/images/arrow.svg'),
+                                ))
+                            : SizedBox.shrink(),
                       ],
                     ),
                   ),

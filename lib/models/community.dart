@@ -25,6 +25,7 @@ class Community {
   final Plugins plugins;
   final CommunityMetadata metadata;
   final bool isClosed;
+  final String webUrl;
 
   @JsonKey(name: 'jobs', fromJson: _jobsFromJson, toJson: _jobsToJson)
   final List<Job> jobs;
@@ -42,6 +43,7 @@ class Community {
       this.jobs,
       this.metadata,
       this.homeBridgeAddress,
+      this.webUrl,
       this.foreignBridgeAddress,
       this.secondaryTokenAddress,
       this.secondaryTokenBalance});
@@ -86,10 +88,12 @@ class Community {
     List<Job> jobs,
     bool isMember,
     CommunityMetadata metadata,
-    bool isClosed
+    bool isClosed,
+    String webUrl,
   }) {
     return Community(
-        isClosed: isClosed ?? isClosed,
+        isClosed: isClosed ?? this.isClosed,
+        webUrl: webUrl ?? this.webUrl,
         metadata: metadata ?? this.metadata,
         tokenBalance: tokenBalance ?? this.tokenBalance,
         address: address ?? this.address,

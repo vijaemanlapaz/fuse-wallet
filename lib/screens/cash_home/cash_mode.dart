@@ -7,6 +7,7 @@ import 'package:fusecash/models/views/bottom_bar.dart';
 import 'package:fusecash/screens/buy/buy.dart';
 import 'package:fusecash/screens/cash_home/cash_header.dart';
 import 'package:fusecash/screens/cash_home/cash_home.dart';
+import 'package:fusecash/screens/cash_home/webview_page.dart';
 import 'package:fusecash/screens/send/contacts_list.dart';
 import 'package:fusecash/screens/send/receive.dart';
 import 'package:fusecash/screens/send/send_contact.dart';
@@ -31,19 +32,33 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
     _currentIndex = widget.tabIndex;
   }
 
-  List<Widget> _pages(List<Contact> contacts) {
+  List<Widget> _pages(List<Contact> contacts, String webUrl) {
     bool hasContactsInStore = contacts.isNotEmpty;
-    return [
-      CashHomeScreen(),
-      !hasContactsInStore
-          ? SendToContactScreen()
-          : ContactsList(contacts: contacts),
-      BuyScreen(),
-      ReceiveScreen()
-    ];
+    if (webUrl != null && webUrl.isNotEmpty) {
+      return [
+        CashHomeScreen(),
+        !hasContactsInStore
+            ? SendToContactScreen()
+            : ContactsList(contacts: contacts),
+        WebViewPage(
+          pageArgs: WebViewPageArguments(
+              url: webUrl, withBack: false, title: 'Community webpage'),
+        ),
+        ReceiveScreen()
+      ];
+    } else {
+      return [
+        CashHomeScreen(),
+        !hasContactsInStore
+            ? SendToContactScreen()
+            : ContactsList(contacts: contacts),
+        BuyScreen(),
+        ReceiveScreen()
+      ];
+    }
   }
 
-  _onTap(int itemIndex) {
+  void _onTap(int itemIndex) {
     setState(() {
       _currentIndex = itemIndex;
     });
@@ -54,9 +69,11 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
     return new StoreConnector<AppState, BottomBarViewModel>(
         converter: BottomBarViewModel.fromStore,
         builder: (_, vm) {
-          final List<Widget> pages = _pages(vm.contacts);
+          final List<Widget> pages = _pages(vm.contacts, vm.community?.webUrl);
           return TabsScaffold(
               header: MyAppBar(
+                height: MediaQuery.of(context).size.height * .25,
+                backgroundColor: Colors.red,
                 child: CashHeader(),
               ),
               drawerEdgeDragWidth: 0,

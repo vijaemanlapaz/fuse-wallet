@@ -31,6 +31,7 @@ Community _$CommunityFromJson(Map<String, dynamic> json) {
         ? null
         : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
     homeBridgeAddress: json['homeBridgeAddress'] as String,
+    webUrl: json['webUrl'] as String,
     foreignBridgeAddress: json['foreignBridgeAddress'] as String,
     secondaryTokenAddress: json['secondaryTokenAddress'] as String,
     secondaryTokenBalance: json['secondaryTokenBalance'] == null
@@ -54,5 +55,6 @@ Map<String, dynamic> _$CommunityToJson(Community instance) => <String, dynamic>{
       'plugins': instance.plugins?.toJson(),
       'metadata': instance.metadata?.toJson(),
       'isClosed': instance.isClosed,
+      'webUrl': instance.webUrl,
       'jobs': Community._jobsToJson(instance.jobs),
     };

@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:core';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fusecash/generated/i18n.dart';
 import 'package:fusecash/models/business.dart';
 import 'package:fusecash/models/token.dart';
-import 'package:fusecash/screens/routes.gr.dart';
+import 'package:fusecash/screens/send/send_amount.dart';
 import 'package:fusecash/screens/send/send_amount_arguments.dart';
 import 'package:fusecash/utils/transaction_row.dart';
 import 'package:fusecash/widgets/drawer.dart';
@@ -81,20 +82,34 @@ class _BusinessPageState extends State<BusinessPage> {
                                               .business.metadata.coverPhoto ==
                                           ''
                                   ? SizedBox.expand(
-                                      child: Image.network(
-                                        coverPhotoUrl,
+                                      child: CachedNetworkImage(
+                                      imageUrl: coverPhotoUrl,
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                      imageBuilder: (context, imageProvider) =>
+                                          Image(
+                                        image: imageProvider,
                                         fit: BoxFit.fill,
                                       ),
-                                    )
+                                    ))
                                   : SizedBox.expand(
-                                      child: Image.network(
-                                        coverPhotoUrl,
+                                      child: CachedNetworkImage(
+                                      imageUrl: coverPhotoUrl,
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                      imageBuilder: (context, imageProvider) =>
+                                          Image(
+                                        image: imageProvider,
                                         width:
                                             MediaQuery.of(context).size.width,
                                         fit: BoxFit.fill,
                                         height: 200,
                                       ),
-                                    )),
+                                    ))),
                           new Positioned(
                               top: 50.0,
                               left: 18.0,
@@ -119,11 +134,18 @@ class _BusinessPageState extends State<BusinessPage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20, right: 10),
                             child: ClipOval(
-                                child: Image.network(
-                              imageUrl,
-                              fit: BoxFit.cover,
-                              width: 75.0,
-                              height: 75.0,
+                                child: CachedNetworkImage(
+                              imageUrl: imageUrl,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              imageBuilder: (context, imageProvider) => Image(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                                width: 75.0,
+                                height: 75.0,
+                              ),
                             )),
                           ),
                           Wrap(
@@ -327,15 +349,19 @@ class _BusinessPageState extends State<BusinessPage> {
                                     fontWeight: FontWeight.normal),
                               ),
                               onPressed: () {
-                                Router.navigator.pushNamed(
-                                    Router.sendAmountScreen,
-                                    arguments: SendAmountArguments(
-                                      sendType: SendType.BUSINESS,
-                                      accountAddress:
-                                          businessArgs.business.account,
-                                      avatar: NetworkImage(imageUrl),
-                                      name: businessArgs.business.name ?? '',
-                                    ));
+                                Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) => SendAmountScreen(
+                                                pageArgs: SendAmountArguments(
+                                              sendType: SendType.BUSINESS,
+                                              accountAddress:
+                                                  businessArgs.business.account,
+                                              avatar: NetworkImage(imageUrl),
+                                              name:
+                                                  businessArgs.business.name ??
+                                                      '',
+                                            ))));
                               },
                             ),
                           )

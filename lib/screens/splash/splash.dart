@@ -6,6 +6,7 @@ import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
 import 'package:fusecash/redux/actions/user_actions.dart';
 import 'package:fusecash/screens/routes.gr.dart';
 import 'package:fusecash/widgets/on_boarding_pages.dart';
+import 'package:redux/redux.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  onInit(store) {
+  onInit(Store<AppState> store) {
     String privateKey = store.state.userState.privateKey;
     String jwtToken = store.state.userState.jwtToken;
     bool isLoggedOut = store.state.userState.isLoggedOut;
@@ -39,7 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
         converter: SplashViewModel.fromStore,
         builder: (_, viewModel) {
           List pages = getPages(context);
-          return Scaffold(
+          return new WillPopScope(
+              onWillPop: () {
+                return new Future(() => false);
+              },
+              child: Scaffold(
               drawer: drawer,
               body: Container(
                   child: Column(
@@ -66,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     )),
                   ),
                 ],
-              )));
+              ))));
         });
   }
 }

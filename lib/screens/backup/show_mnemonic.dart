@@ -27,17 +27,20 @@ class ShowMnemonic extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                   child: RichText(
                       textAlign: TextAlign.center,
-                      text: new TextSpan(children: <InlineSpan>[
-                        TextSpan(
-                          text: I18n.of(context).important + ' ',
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                        TextSpan(
-                            text: I18n.of(context).write_words,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontSize: 16))
-                      ])),
+                      text: new TextSpan(
+                          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text: I18n.of(context).important + ' ',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            TextSpan(
+                                text: I18n.of(context).write_words,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary))
+                          ])),
                 )
               ],
             ),
@@ -145,16 +148,8 @@ class ShowMnemonic extends StatelessWidget {
                                   context,
                                   new MaterialPageRoute(
                                       builder: (context) => VerifyMnemonic()));
-                              // Router.navigator.pushNamed(Router.verifyMnemonic);
                             },
                           )),
-                          // const SizedBox(height: 16.0),
-                          // TransparentButton(
-                          //     label: I18n.of(context).skip_button,
-                          //     onPressed: () {
-                          //       Navigator.of(context).pop();
-                          //     }),
-                          // const SizedBox(height: 30.0),
                         ],
                       )
                     : Padding(
