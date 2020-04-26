@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final String seedbBedCommuntiyAddress =
-    '0x5c22cd8eb7682d6181f18781bb5a6567e40a89f7';
+    '0x070aa6a695461f4f07cc4a9e01acd8dbd669ac8d';
 
 bool isFork() {
   return DotEnv().env['FORK'] != null && DotEnv().env['FORK'] == 'true';
