@@ -435,6 +435,10 @@ ThunkAction startTransfersFetchingCall() {
       store.dispatch(getTokenTransfersListCall(tokenAddress));
       store.dispatch(getTokenBalanceCall(tokenAddress));
     }
+
+    if (community.secondaryToken?.address != null) {
+      store.dispatch(getTokenTransfersListCall(community.secondaryToken?.address));
+    }
     new Timer.periodic(Duration(seconds: 3), (Timer t) async {
       if (store.state.cashWalletState.walletAddress == '') {
         t.cancel();
@@ -446,6 +450,10 @@ ThunkAction startTransfersFetchingCall() {
       String tokenAddress = community.token?.address;
       if (tokenAddress != null) {
         store.dispatch(getReceivedTokenTransfersListCall(tokenAddress));
+      }
+
+      if (community.secondaryToken?.address != null) {
+        store.dispatch(getReceivedTokenTransfersListCall(community.secondaryToken?.address));
       }
     });
     store.dispatch(new StartTransfersFetchingSuccess());

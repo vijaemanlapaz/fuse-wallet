@@ -45,6 +45,7 @@ class TransactionListItem extends StatelessWidget {
                     ? _contact.displayName
                     : deducePhoneNumber(transfer, _vm.reverseContacts,
                         businesses: _vm.businesses);
+    String symbol = _vm.token.address == transfer.tokenAddress ? _vm.token.symbol : _vm.community.secondaryToken?.symbol;
     List<Widget> rightColumn = <Widget>[
       transfer.isGenerateWallet() || transfer.isJoinCommunity()
           ? SizedBox.shrink()
@@ -66,7 +67,7 @@ class TransactionListItem extends StatelessWidget {
                               fontSize: 15.0,
                               fontWeight: FontWeight.bold)),
                       new TextSpan(
-                          text: " ${_vm.token.symbol}",
+                          text: " $symbol",
                           style: new TextStyle(
                               color: deduceColor(transfer),
                               fontSize: 10.0,
@@ -144,7 +145,7 @@ class TransactionListItem extends StatelessWidget {
                                     _vm.community.metadata.isDefaultImage &&
                                     transfer.isJoinCommunity()
                                 ? Text(
-                                    _vm.community.token.symbol,
+                                    symbol,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
@@ -282,7 +283,7 @@ class TransactionListItem extends StatelessWidget {
                     contact: _contact,
                     from: displayName,
                     reverseContacts: _vm.reverseContacts,
-                    symbol: _vm.token.symbol,
+                    symbol: symbol,
                     image: image,
                     amount: [
                       Text(
@@ -294,7 +295,7 @@ class TransactionListItem extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        " ${_vm.token.symbol}",
+                        " $symbol",
                         style: TextStyle(
                             color: deduceColor(transfer),
                             fontSize: 16.0,
