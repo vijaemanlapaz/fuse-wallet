@@ -159,10 +159,7 @@ class CashHeader extends StatelessWidget {
                             SizedBox(
                               width: 30,
                             ),
-                            (viewModel.community.secondaryTokenAddress ==
-                                        null ||
-                                    viewModel.community.secondaryTokenAddress ==
-                                            '')
+                            viewModel.community.secondaryToken == null
                                 ? SizedBox.shrink()
                                 : Column(
                                     crossAxisAlignment:
@@ -190,8 +187,10 @@ class CashHeader extends StatelessWidget {
                                                       text: formatValue(
                                                           viewModel.community
                                                               .secondaryTokenBalance,
-                                                          viewModel.community
-                                                              .token.decimals),
+                                                          viewModel
+                                                              .community
+                                                              .secondaryToken
+                                                              .decimals),
                                                       style: new TextStyle(
                                                           fontSize: 32,
                                                           color:
@@ -199,16 +198,21 @@ class CashHeader extends StatelessWidget {
                                                                   .splashColor,
                                                           fontWeight:
                                                               FontWeight.bold)),
-                                                  // new TextSpan(
-                                                  //     text: '',
-                                                  //     style: new TextStyle(
-                                                  //         fontSize: 18,
-                                                  //         color:
-                                                  //             Theme.of(context)
-                                                  //                 .splashColor,
-                                                  //         fontWeight:
-                                                  //             FontWeight.normal,
-                                                  //         height: 0.0)),
+                                                  new TextSpan(
+                                                      text: ' ' +
+                                                          viewModel
+                                                              .community
+                                                              .secondaryToken
+                                                              ?.symbol
+                                                              .toString(),
+                                                      style: new TextStyle(
+                                                          fontSize: 18,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .splashColor,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          height: 0.0)),
                                                 ],
                                               ),
                                             ),

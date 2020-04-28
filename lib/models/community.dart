@@ -22,6 +22,7 @@ class Community {
   final List<Business> businesses;
   final Transactions transactions;
   final Token token;
+  final Token secondaryToken;
   final Plugins plugins;
   final CommunityMetadata metadata;
   final bool isClosed;
@@ -38,6 +39,7 @@ class Community {
       this.plugins,
       this.transactions,
       this.token,
+      this.secondaryToken,
       this.tokenBalance,
       this.businesses,
       this.jobs,
@@ -65,6 +67,7 @@ class Community {
         secondaryTokenAddress: null,
         secondaryTokenBalance: BigInt.from(0),
         token: null,
+        secondaryToken: null,
         isMember: false,
         tokenBalance: BigInt.from(0),
         businesses: new List<Business>(),
@@ -81,6 +84,7 @@ class Community {
     String secondaryTokenAddress,
     Plugins plugins,
     Token token,
+    Token secondaryToken,
     Transactions transactions,
     BigInt tokenBalance,
     BigInt secondaryTokenBalance,
@@ -101,6 +105,7 @@ class Community {
         plugins: plugins ?? this.plugins,
         secondaryTokenAddress: secondaryTokenAddress ?? this.secondaryTokenAddress,
         token: token ?? this.token,
+        secondaryToken: secondaryToken ?? this.secondaryToken,
         secondaryTokenBalance: secondaryTokenBalance ?? this.secondaryTokenBalance,
         businesses: businesses ?? this.businesses,
         isMember: isMember ?? this.isMember,

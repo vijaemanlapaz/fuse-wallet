@@ -123,6 +123,11 @@ class FetchCommunityMetadataSuccess {
   FetchCommunityMetadataSuccess(this.metadata);
 }
 
+class FetchSecondaryTokenSuccess {
+  final Token token;
+  FetchSecondaryTokenSuccess({this.token});
+}
+
 class SwitchCommunityFailed {}
 
 class StartFetchingBusinessList {
@@ -571,21 +576,21 @@ ThunkAction getTokenBalanceCall(String tokenAddress) {
       String communityAddress = store.state.cashWalletState.communityAddress;
       Community community = store.state.cashWalletState.communities[communityAddress];
       String balance = formatValue(tokenBalance, community.token.decimals);
-      if (community.secondaryTokenAddress != null && community.secondaryTokenAddress != '') {
-        BigInt secondaryTokenBalance = (await graph.getTokenBalance(walletAddress, community.secondaryTokenAddress));
-        String balance = formatValue(secondaryTokenBalance, community.token.decimals);
-        store.dispatch(new GetSecondaryTokenBalanceSuccess(secondaryTokenBalance));
-        store.dispatch(segmentIdentifyCall(Map<String, dynamic>.from({
-          'Secondary token - ${community.name} Balance': balance,
-          "Secondary token Display Balance": balance
-        })));
-      }
       store.dispatch(new GetTokenBalanceSuccess(tokenBalance));
       store.dispatch(new UpdateDisplayBalance(int.tryParse(balance)));
       store.dispatch(segmentIdentifyCall(Map<String, dynamic>.from({
         '${community.name} Balance': balance,
         "DisplayBalance": balance
       })));
+      if (community.secondaryToken != null && community.secondaryToken.address != null && community.secondaryToken.address != '') {
+        BigInt secondaryTokenBalance = (await graph.getTokenBalance(walletAddress, community.secondaryToken.address));
+        String balance = formatValue(secondaryTokenBalance, community.secondaryToken.decimals);
+        store.dispatch(new GetSecondaryTokenBalanceSuccess(secondaryTokenBalance));
+        store.dispatch(segmentIdentifyCall(Map<String, dynamic>.from({
+          'Secondary token - ${community.name} Balance': balance,
+          "Secondary token Display Balance": balance
+        })));
+      }
     } catch (e) {
       logger.severe('ERROR - getTokenBalanceCall $e');
       store.dispatch(new ErrorAction('Could not get token balance'));
@@ -687,15 +692,12 @@ ThunkAction inviteAndSendCall(
   num tokensAmount,
   VoidCallback sendSuccessCallback,
   VoidCallback sendFailureCallback,
-  {String receiverName = ''}
+  {String receiverName = '', Token token}
 ) {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
-      String communityAddres = store.state.cashWalletState.communityAddress;
       String senderName = store.state.userState.displayName;
-      Community community = store.state.cashWalletState.communities[communityAddres];
-      Token token = community?.token;
       dynamic response = await api.invite(
         contactPhoneNumber,
         store.state.cashWalletState.communityAddress,
@@ -705,15 +707,13 @@ ThunkAction inviteAndSendCall(
       );
       sendSuccessCallback();
 
-      String tokenAddress = token?.address;
-
       BigInt value = toBigInt(tokensAmount, token.decimals);
       String walletAddress = store.state.cashWalletState.walletAddress;
 
       Transfer inviteTransfer = new Transfer(
           from: walletAddress,
           to: '',
-          tokenAddress: tokenAddress,
+          tokenAddress: token.address,
           value: value,
           type: 'SEND',
           receiverName: receiverName,
@@ -803,7 +803,7 @@ ThunkAction inviteBonusSuccessCall(String txHash, transfer) {
 
 ThunkAction sendTokenCall(String receiverAddress, num tokensAmount,
     VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback,
-    {String receiverName, String transferNote, Transfer inviteTransfer}) {
+    {String receiverName, String transferNote, Transfer inviteTransfer, Token token}) {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
@@ -812,17 +812,11 @@ ThunkAction sendTokenCall(String receiverAddress, num tokensAmount,
         throw "Web3 is empty";
       }
       String walletAddress = store.state.cashWalletState.walletAddress;
-      String communityAddres = store.state.cashWalletState.communityAddress;
-      Community community =
-          store.state.cashWalletState.communities[communityAddres];
-      Token token = community?.token;
-      String tokenAddress = token?.address;
-
       BigInt value = toBigInt(tokensAmount, token.decimals);
       logger.info(
-          'Sending $tokensAmount tokens of $tokenAddress from wallet $walletAddress to $receiverAddress');
+          'Sending $tokensAmount tokens of ${token.address} from wallet $walletAddress to $receiverAddress');
       dynamic response = await api.tokenTransfer(
-          web3, walletAddress, tokenAddress, receiverAddress, tokensAmount);
+          web3, walletAddress, token.address, receiverAddress, tokensAmount);
 
       dynamic jobId = response['job']['_id'];
       logger.info('Job $jobId for sending token sent to the relay service');
@@ -831,7 +825,7 @@ ThunkAction sendTokenCall(String receiverAddress, num tokensAmount,
       Transfer transfer = new Transfer(
           from: walletAddress,
           to: receiverAddress,
-          tokenAddress: tokenAddress,
+          tokenAddress: token.address,
           value: value,
           type: 'SEND',
           note: transferNote,
@@ -987,6 +981,27 @@ ThunkAction fetchCommunityMetadataCall(String communityURI) {
   };
 }
 
+ThunkAction fetchSecondaryTokenCall(String tokenAddress) {
+  return (Store store) async {
+    final logger = await AppFactory().getLogger('action');
+    try {
+      dynamic tokens = await graph.getTokenByAddress(tokenAddress);
+      dynamic tokenInfo = tokens[0];
+      Token secondaryToken = new Token(
+              originNetwork: tokenInfo['originNetwork'],
+              address: tokenInfo["address"],
+              name: tokenInfo["name"],
+              symbol: tokenInfo["symbol"],
+              decimals: tokenInfo["decimals"]);
+      store.dispatch(FetchSecondaryTokenSuccess(token: secondaryToken));
+    } catch (e, s) {
+      logger.info('ERROR - fetchSecondaryTokenCall $e');
+      await AppFactory().reportError(e, s);
+      store.dispatch(new ErrorAction('Could not fetch Secondary token info from the gragh'));
+    }
+  };
+}
+
 ThunkAction switchToNewCommunityCall(String communityAddress) {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
@@ -1007,6 +1022,9 @@ ThunkAction switchToNewCommunityCall(String communityAddress) {
       String foreignBridgeAddress = communityData['foreignBridgeAddress'];
       String secondaryTokenAddress = communityData['secondaryTokenAddress'] ?? '';
       String webUrl = communityData['webUrl'];
+      if (secondaryTokenAddress != null && secondaryTokenAddress != '') {
+        store.dispatch(fetchSecondaryTokenCall(secondaryTokenAddress));
+      }
       store.dispatch(new SwitchCommunitySuccess(
           communityAddress: communityAddress,
           communityName: community["name"],
@@ -1056,6 +1074,9 @@ ThunkAction switchToExisitingCommunityCall(String communityAddress) {
       String foreignBridgeAddress = communityData['foreignBridgeAddress'];
       String secondaryTokenAddress = communityData['secondaryTokenAddress'] ?? '';
       String webUrl = communityData['webUrl'];
+      if (secondaryTokenAddress != null && secondaryTokenAddress != '') {
+        store.dispatch(fetchSecondaryTokenCall(secondaryTokenAddress));
+      }
       store.dispatch(new SwitchCommunitySuccess(
           communityAddress: communityAddress,
           communityName: current.name,
@@ -1226,7 +1247,7 @@ ThunkAction getReceivedTokenTransfersListCall(String tokenAddress) {
 
 ThunkAction sendTokenToContactCall(String name, String contactPhoneNumber, num tokensAmount,
     VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback,
-    {String receiverName, String transferNote}) {
+    {String receiverName, String transferNote, Token token}) {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
@@ -1242,13 +1263,14 @@ ThunkAction sendTokenToContactCall(String name, String contactPhoneNumber, num t
           tokensAmount,
           sendSuccessCallback,
           sendFailureCallback,
-          receiverName: receiverName
+          receiverName: receiverName,
+          token: token
         ));
         return;
       }
       store.dispatch(sendTokenCall(
           walletAddress, tokensAmount, sendSuccessCallback, sendFailureCallback,
-          receiverName: receiverName, transferNote: transferNote));
+          receiverName: receiverName, transferNote: transferNote, token: token));
     } catch (e) {
       logger.severe('ERROR - sendTokenToContactCall $e');
       store.dispatch(new ErrorAction('Could not send token to contact'));

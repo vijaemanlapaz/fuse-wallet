@@ -70,10 +70,12 @@ class _SendReviewScreenState extends State<SendReviewScreen>
           transferNote,
           sendSuccessCallback,
           sendFailureCallback,
+          token: args.tokenToSend == null ? viewModel.token : args.tokenToSend,
         );
       } else {
         viewModel.sendToAccountAddress(args.accountAddress, args.amount,
-            args.name, transferNote, sendSuccessCallback, sendFailureCallback);
+            args.name, transferNote, sendSuccessCallback, sendFailureCallback,
+            token: args.tokenToSend == null ? viewModel.token : args.tokenToSend,);
       }
     }
   }
@@ -111,7 +113,7 @@ class _SendReviewScreenState extends State<SendReviewScreen>
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 50,
                                 fontWeight: FontWeight.w900)),
-                        Text(viewModel.token.symbol,
+                        Text(args.tokenToSend != null ? args.tokenToSend.symbol : viewModel.token.symbol,
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 30,

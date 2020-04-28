@@ -12,8 +12,8 @@ class SendAmountViewModel {
   final bool isProMode;
   final String myCountryCode;
   final Community community;
-  final Function(String name, String phoneNumber, num, String receiverName, String transferNote, VoidCallback, VoidCallback) sendToContact;
-  final Function(String, num, String receiverName, String transferNote, VoidCallback, VoidCallback) sendToAccountAddress;
+  final Function(String name, String phoneNumber, num, String receiverName, String transferNote, VoidCallback, VoidCallback, {Token token}) sendToContact;
+  final Function(String, num, String receiverName, String transferNote, VoidCallback, VoidCallback, {Token token}) sendToAccountAddress;
   final Function(String eventName, {Map<String, dynamic> properties}) trackTransferCall;
   final Function(Map<String, dynamic> traits) idenyifyCall;
   final Function(num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) sendToCashMode;
@@ -47,6 +47,7 @@ class SendAmountViewModel {
             String transferNote,
             VoidCallback sendSuccessCallback,
             VoidCallback sendFailureCallback,
+            {Token token}
         ) {
           store.dispatch(sendTokenToContactCall(
             name,
@@ -54,7 +55,8 @@ class SendAmountViewModel {
             amount,
             sendSuccessCallback,
             sendFailureCallback,
-            receiverName: receiverName
+            receiverName: receiverName,
+            token: token
           ));
         },
         sendToAccountAddress: (
@@ -64,6 +66,7 @@ class SendAmountViewModel {
             String transferNote,
             VoidCallback sendSuccessCallback,
             VoidCallback sendFailureCallback,
+            {Token token}
           ) {
           store.dispatch(sendTokenCall(
             recieverAddress,
@@ -71,6 +74,7 @@ class SendAmountViewModel {
             sendSuccessCallback,
             sendFailureCallback,
             receiverName: receiverName,
+            token: token
           ));
         },
         sendToCashMode: (

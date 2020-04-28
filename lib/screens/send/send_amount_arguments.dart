@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fusecash/models/pro/token.dart';
+import 'package:fusecash/models/token.dart' as token;
 
 enum SendType {
   CONTACT,
@@ -20,6 +21,7 @@ class SendAmountArguments {
   bool sendToCashMode = false;
   bool isProMode = false;
   Token erc20Token;
+  token.Token tokenToSend;
 
   SendAmountArguments(
       {this.sendToCashMode = false,
