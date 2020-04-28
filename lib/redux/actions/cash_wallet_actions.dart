@@ -987,6 +987,7 @@ ThunkAction fetchSecondaryTokenCall(String tokenAddress) {
     try {
       dynamic tokens = await graph.getTokenByAddress(tokenAddress);
       dynamic tokenInfo = tokens[0];
+      logger.info('fetched secondary token ${tokenInfo["address"]} (${tokenInfo["symbol"]})');
       Token secondaryToken = new Token(
               originNetwork: tokenInfo['originNetwork'],
               address: tokenInfo["address"],
@@ -1086,7 +1087,6 @@ ThunkAction switchToExisitingCommunityCall(String communityAddress) {
           isClosed: current.isClosed,
           homeBridgeAddress: homeBridgeAddress,
           foreignBridgeAddress: foreignBridgeAddress,
-          secondaryTokenAddress: secondaryTokenAddress,
           webUrl: webUrl
           ));
     } catch (e, s) {

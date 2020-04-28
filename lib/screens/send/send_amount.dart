@@ -90,7 +90,6 @@ class _SendAmountScreenState extends State<SendAmountScreen>
     String title =
         "${I18n.of(context).send_to} ${args.name != null ? args.name : formatAddress(args.accountAddress)}";
     return new StoreConnector<AppState, SendAmountViewModel>(
-      distinct: true,
       converter: SendAmountViewModel.fromStore,
       onInitialBuild: (viewModel) {
         setState(() {
