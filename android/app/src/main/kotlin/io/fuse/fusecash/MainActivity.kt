@@ -1,4 +1,4 @@
-package io.fuse.fusecash
+package io.fuse.seedbed
 
 import android.os.Bundle
 

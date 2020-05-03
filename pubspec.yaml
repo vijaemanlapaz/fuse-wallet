@@ -69,6 +69,7 @@ flutter_icons:
 flutter:
   assets:
     - .env_seedbed
+    - .env_qa
     - assets/
     - assets/images/
   fonts:
