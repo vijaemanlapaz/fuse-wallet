@@ -21,15 +21,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>seedbed-1f2fc.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1061346702666:ios:6888db650b48ce1ef5fdb3</string>
 	<key>DATABASE_URL</key>
