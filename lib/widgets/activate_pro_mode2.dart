@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/screens/send/send_amount.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/widgets/activate_pro_mode.dart';
+import 'package:seedbed/models/app_state.dart';
+import 'package:seedbed/screens/send/send_amount.dart';
+import 'package:seedbed/screens/send/send_amount_arguments.dart';
+import 'package:seedbed/widgets/activate_pro_mode.dart';
 import 'dart:core';
 
-import 'package:fusecash/widgets/primary_button.dart';
+import 'package:seedbed/widgets/primary_button.dart';
 
 class ActivateProMode2Dialog extends StatefulWidget {
   @override

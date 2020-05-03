@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:fusecash/screens/buy/business.dart';
-import 'package:fusecash/screens/buy/map.dart';
-import 'package:fusecash/screens/cash_home/cash_mode.dart';
-import 'package:fusecash/screens/cash_home/prize.dart';
-import 'package:fusecash/screens/cash_home/transaction_details.dart';
-import 'package:fusecash/screens/signup/recovery.dart';
-import 'package:fusecash/screens/signup/username.dart';
-import 'package:fusecash/screens/signup/signup.dart';
-import 'package:fusecash/screens/signup/verify.dart';
-import 'package:fusecash/screens/splash/splash.dart';
-import 'package:fusecash/screens/misc/pincode.dart';
+import 'package:seedbed/screens/buy/business.dart';
+import 'package:seedbed/screens/buy/map.dart';
+import 'package:seedbed/screens/cash_home/cash_mode.dart';
+import 'package:seedbed/screens/cash_home/prize.dart';
+import 'package:seedbed/screens/cash_home/transaction_details.dart';
+import 'package:seedbed/screens/signup/recovery.dart';
+import 'package:seedbed/screens/signup/username.dart';
+import 'package:seedbed/screens/signup/signup.dart';
+import 'package:seedbed/screens/signup/verify.dart';
+import 'package:seedbed/screens/splash/splash.dart';
+import 'package:seedbed/screens/misc/pincode.dart';
 
 @MaterialAutoRouter()
 class $Router {

@@ -2,17 +2,17 @@ import 'dart:core';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/views/buy_page.dart';
-import 'package:fusecash/screens/buy/business.dart';
-import 'package:fusecash/screens/cash_home/webview_page.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/screens/send/send_amount.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/utils/transaction_row.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:seedbed/generated/i18n.dart';
+import 'package:seedbed/models/app_state.dart';
+import 'package:seedbed/models/business.dart';
+import 'package:seedbed/models/views/buy_page.dart';
+import 'package:seedbed/screens/buy/business.dart';
+import 'package:seedbed/screens/cash_home/webview_page.dart';
+import 'package:seedbed/screens/routes.gr.dart';
+import 'package:seedbed/screens/send/send_amount.dart';
+import 'package:seedbed/screens/send/send_amount_arguments.dart';
+import 'package:seedbed/utils/transaction_row.dart';
+import 'package:seedbed/widgets/main_scaffold.dart';
 
 class BuyScreen extends StatelessWidget {
   @override

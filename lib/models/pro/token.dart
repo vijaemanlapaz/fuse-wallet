@@ -1,5 +1,5 @@
-import 'package:fusecash/models/jobs/base.dart';
-import 'package:fusecash/models/transactions/transactions.dart';
+import 'package:seedbed/models/jobs/base.dart';
+import 'package:seedbed/models/transactions/transactions.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'token.g.dart';

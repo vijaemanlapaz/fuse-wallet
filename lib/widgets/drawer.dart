@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_segment/flutter_segment.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
+import 'package:seedbed/generated/i18n.dart';
+import 'package:seedbed/models/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/models/views/drawer.dart';
-import 'package:fusecash/screens/backup/show_mnemonic.dart';
-import 'package:fusecash/screens/cash_home/deposit_webview.dart';
-import 'package:fusecash/screens/cash_home/switch_commmunity.dart';
-import 'package:fusecash/screens/misc/settings.dart';
-import 'package:fusecash/utils/forks.dart';
-import 'package:fusecash/utils/format.dart';
+import 'package:seedbed/models/views/drawer.dart';
+import 'package:seedbed/screens/backup/show_mnemonic.dart';
+import 'package:seedbed/screens/cash_home/deposit_webview.dart';
+import 'package:seedbed/screens/cash_home/switch_commmunity.dart';
+import 'package:seedbed/screens/misc/settings.dart';
+import 'package:seedbed/utils/forks.dart';
+import 'package:seedbed/utils/format.dart';
 
 String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 

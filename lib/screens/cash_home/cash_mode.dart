@@ -1,20 +1,20 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/views/bottom_bar.dart';
-import 'package:fusecash/screens/buy/buy.dart';
-import 'package:fusecash/screens/cash_home/cash_header.dart';
-import 'package:fusecash/screens/cash_home/cash_home.dart';
-import 'package:fusecash/screens/cash_home/webview_page.dart';
-import 'package:fusecash/screens/send/contacts_list.dart';
-import 'package:fusecash/screens/send/receive.dart';
-import 'package:fusecash/screens/send/send_contact.dart';
-import 'package:fusecash/widgets/bottom_bar_item.dart';
-import 'package:fusecash/widgets/drawer.dart';
-import 'package:fusecash/widgets/my_app_bar.dart';
-import 'package:fusecash/widgets/tabs_scaffold.dart';
+import 'package:seedbed/generated/i18n.dart';
+import 'package:seedbed/models/app_state.dart';
+import 'package:seedbed/models/views/bottom_bar.dart';
+import 'package:seedbed/screens/buy/buy.dart';
+import 'package:seedbed/screens/cash_home/cash_header.dart';
+import 'package:seedbed/screens/cash_home/cash_home.dart';
+import 'package:seedbed/screens/cash_home/webview_page.dart';
+import 'package:seedbed/screens/send/contacts_list.dart';
+import 'package:seedbed/screens/send/receive.dart';
+import 'package:seedbed/screens/send/send_contact.dart';
+import 'package:seedbed/widgets/bottom_bar_item.dart';
+import 'package:seedbed/widgets/drawer.dart';
+import 'package:seedbed/widgets/my_app_bar.dart';
+import 'package:seedbed/widgets/tabs_scaffold.dart';
 
 class CashModeScaffold extends StatefulWidget {
   final int tabIndex;

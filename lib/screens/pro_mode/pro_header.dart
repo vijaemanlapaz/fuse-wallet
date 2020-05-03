@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:fusecash/models/pro/token.dart';
-import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
-import 'package:fusecash/utils/addresses.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/utils/barcode.dart';
+import 'package:seedbed/models/pro/token.dart';
+import 'package:seedbed/redux/actions/cash_wallet_actions.dart';
+import 'package:seedbed/utils/addresses.dart';
+import 'package:seedbed/utils/format.dart';
+import 'package:seedbed/utils/barcode.dart';
 import 'package:redux/redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
+import 'package:seedbed/generated/i18n.dart';
+import 'package:seedbed/models/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/widgets/raised_gradient_button.dart';
+import 'package:seedbed/widgets/raised_gradient_button.dart';
 
 class ProHeader extends StatelessWidget {
   @override

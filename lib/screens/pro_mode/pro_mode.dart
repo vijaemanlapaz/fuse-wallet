@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/views/bottom_bar.dart';
-import 'package:fusecash/redux/actions/pro_mode_wallet_actions.dart';
-import 'package:fusecash/screens/pro_mode/pro_drawer.dart';
-import 'package:fusecash/screens/pro_mode/pro_header.dart';
-import 'package:fusecash/screens/pro_mode/pro_home.dart';
-import 'package:fusecash/screens/send/contacts_list.dart';
-import 'package:fusecash/screens/send/receive.dart';
-import 'package:fusecash/screens/send/send_contact.dart';
-import 'package:fusecash/widgets/bottom_bar_item.dart';
-import 'package:fusecash/widgets/coming_soon.dart';
-import 'package:fusecash/widgets/my_app_bar.dart';
-import 'package:fusecash/widgets/tabs_scaffold.dart';
+import 'package:seedbed/generated/i18n.dart';
+import 'package:seedbed/models/app_state.dart';
+import 'package:seedbed/models/views/bottom_bar.dart';
+import 'package:seedbed/redux/actions/pro_mode_wallet_actions.dart';
+import 'package:seedbed/screens/pro_mode/pro_drawer.dart';
+import 'package:seedbed/screens/pro_mode/pro_header.dart';
+import 'package:seedbed/screens/pro_mode/pro_home.dart';
+import 'package:seedbed/screens/send/contacts_list.dart';
+import 'package:seedbed/screens/send/receive.dart';
+import 'package:seedbed/screens/send/send_contact.dart';
+import 'package:seedbed/widgets/bottom_bar_item.dart';
+import 'package:seedbed/widgets/coming_soon.dart';
+import 'package:seedbed/widgets/my_app_bar.dart';
+import 'package:seedbed/widgets/tabs_scaffold.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:redux/redux.dart';
 
@@ -36,7 +36,7 @@ class _ProModeScaffoldState extends State<ProModeScaffold> {
     rateMyApp = RateMyApp(
       minDays: 0,
       minLaunches: 0,
-      googlePlayIdentifier: 'io.fuse.fusecash',
+      googlePlayIdentifier: 'io.fuse.seedbed',
       appStoreIdentifier: '1491783654',
     );
     rateMyApp.init().then((_) {

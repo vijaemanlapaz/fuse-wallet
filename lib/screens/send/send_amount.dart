@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/community.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/screens/send/send_review.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
-import 'package:fusecash/widgets/primary_button.dart';
+import 'package:seedbed/generated/i18n.dart';
+import 'package:seedbed/models/community.dart';
+import 'package:seedbed/screens/send/send_amount_arguments.dart';
+import 'package:seedbed/screens/send/send_review.dart';
+import 'package:seedbed/utils/format.dart';
+import 'package:seedbed/widgets/main_scaffold.dart';
+import 'package:seedbed/widgets/primary_button.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
-import 'package:fusecash/models/app_state.dart';
+import 'package:seedbed/models/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/models/token.dart';
+import 'package:seedbed/models/token.dart';
 
 class SendAmountScreen extends StatefulWidget {
   final SendAmountArguments pageArgs;
