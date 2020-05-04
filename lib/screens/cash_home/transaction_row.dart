@@ -45,7 +45,11 @@ class TransactionListItem extends StatelessWidget {
                     ? _contact.displayName
                     : deducePhoneNumber(transfer, _vm.reverseContacts,
                         businesses: _vm.businesses);
-    String symbol = _vm.token.address == transfer.tokenAddress ? _vm.token.symbol : _vm.community.secondaryToken?.symbol;
+    String symbol = _vm.token.address != null &&  transfer.tokenAddress != null
+      ? _vm.token.address == transfer.tokenAddress
+        ? _vm.token.symbol
+          : _vm.community.secondaryToken?.symbol
+          : '';
     List<Widget> rightColumn = <Widget>[
       transfer.isGenerateWallet() || transfer.isJoinCommunity()
           ? SizedBox.shrink()
