@@ -164,9 +164,11 @@ class _SendAmountScreenState extends State<SendAmountScreen>
             }
           }
         }
-
-        final dropOptions = buildDropdownMenuItems(viewModel.tokens, viewModel.community);
-        bool hasSecondToken = (viewModel.community.secondaryToken.address != null && viewModel.community.secondaryToken.address != '');
+        List dropOptions;
+        bool hasSecondToken = viewModel.community.secondaryToken != null && (viewModel.community.secondaryToken.address != null && viewModel.community.secondaryToken.address != '');
+        if (hasSecondToken) {
+          dropOptions = buildDropdownMenuItems(viewModel.tokens, viewModel.community);
+        }
         return MainScaffold(
             withPadding: true,
             title: title,
