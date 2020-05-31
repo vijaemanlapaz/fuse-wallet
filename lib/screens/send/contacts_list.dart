@@ -129,7 +129,9 @@ class _ContactsListState extends State<ContactsList> {
           .toList();
       for (Item phone in phones) {
         listItems.add(ContactTile(
-            avatar: user.avatar,
+            image: user.avatar != null && user.avatar.isNotEmpty
+                ? MemoryImage(user.avatar)
+                : new AssetImage('assets/images/anom.png'),
             displayName: user.displayName,
             phoneNumber: phone.value,
             onTap: () {
@@ -222,25 +224,25 @@ class _ContactsListState extends State<ContactsList> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: TextFormField(
-                    controller: searchController,
-                    style: TextStyle(fontSize: 18, color: Colors.black),
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFE0E0E0), width: 3)),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: const Color(0xFF292929)),
-                      ),
-                      suffixIcon: Icon(
-                        Icons.search,
-                        color: Color(0xFFACACAC),
-                      ),
-                      labelText: I18n.of(context).search,
+                  child: Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: TextFormField(
+                  controller: searchController,
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(0.0),
+                    border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color(0xFFE0E0E0), width: 3)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: const Color(0xFF292929)),
                     ),
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: Color(0xFFACACAC),
+                    ),
+                    labelText: I18n.of(context).search,
+                  ),
                 ),
               )),
               Container(

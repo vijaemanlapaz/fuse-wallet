@@ -77,6 +77,18 @@ class ReceiveScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 60.0),
+                        Container(
+                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                          child: Text(
+                              'Haz click en Compartir para enviar tu cuenta para recibir fondos',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal)),
+                        ),
                       ],
                     ),
                     Center(

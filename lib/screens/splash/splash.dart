@@ -84,29 +84,12 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                       Flexible(
                         flex: 3,
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset('assets/images/2.png', width: MediaQuery.of(context).size.width * 0.5, height: 100),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Image.asset('assets/images/3.jpg',
-                                    width: 100, height: 100),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Image.asset('assets/images/4.jpg',
-                                    width: 100, height: 100),
-                              ],
-                            ),
+                            Image.asset('assets/images/2.png',
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height: 100),
                           ],
                         ),
                       ),

@@ -49,21 +49,24 @@ class _BusinessPageState extends State<BusinessPage> {
   @override
   void initState() {
     super.initState();
-    bool showMap = this.widget.pageArgs.business.metadata.latLng != null && this.widget.pageArgs.business.metadata.latLng.isNotEmpty;
+    bool showMap = this.widget.pageArgs.business.metadata.latLng != null &&
+        this.widget.pageArgs.business.metadata.latLng.isNotEmpty;
     if (showMap) {
       _add();
     }
   }
-
 
   void _add() {
     final String markerIdVal = this.widget.pageArgs.business.name;
     final MarkerId markerId = MarkerId(markerIdVal);
     final BusinessPageArguments businessArgs = this.widget.pageArgs;
     final Marker marker = Marker(
-      markerId: markerId,
-      position: LatLng(businessArgs.business.metadata.latLng[0], businessArgs.business.metadata.latLng[1]),
-      infoWindow: InfoWindow(title: this.widget.pageArgs.business.metadata.address, snippet: '*'));
+        markerId: markerId,
+        position: LatLng(businessArgs.business.metadata.latLng[0],
+            businessArgs.business.metadata.latLng[1]),
+        infoWindow: InfoWindow(
+          title: this.widget.pageArgs.business.metadata.address,
+        ));
 
     setState(() {
       markers[markerId] = marker;
@@ -73,9 +76,12 @@ class _BusinessPageState extends State<BusinessPage> {
   @override
   Widget build(BuildContext context) {
     final BusinessPageArguments businessArgs = this.widget.pageArgs;
-    String coverPhotoUrl = getCoverPhotoUrl(businessArgs.business, businessArgs.communityAddress);
-    String imageUrl = getImageUrl(businessArgs.business, businessArgs.communityAddress);
-    bool showMap = businessArgs.business.metadata.latLng != null && businessArgs.business.metadata.latLng.isNotEmpty;
+    String coverPhotoUrl =
+        getCoverPhotoUrl(businessArgs.business, businessArgs.communityAddress);
+    String imageUrl =
+        getImageUrl(businessArgs.business, businessArgs.communityAddress);
+    bool showMap = businessArgs.business.metadata.latLng != null &&
+        businessArgs.business.metadata.latLng.isNotEmpty;
     return new Scaffold(
       key: scaffoldState,
       body: Container(
@@ -301,7 +307,8 @@ class _BusinessPageState extends State<BusinessPage> {
                                                               .metadata
                                                               .description !=
                                                           ''
-                                                      ? 'More details'
+                                                      ? I18n.of(context)
+                                                          .more_details
                                                       : ''),
                                                 ),
                                                 Padding(
@@ -335,14 +342,19 @@ class _BusinessPageState extends State<BusinessPage> {
                       child: Stack(
                         alignment: AlignmentDirectional.bottomCenter,
                         children: <Widget>[
-                          showMap ? GoogleMap(
-                            onMapCreated: _onMapCreated,
-                            markers: Set<Marker>.from(markers.values),
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(businessArgs.business.metadata.latLng[0], businessArgs.business.metadata.latLng[1]),
-                              zoom: 13.0,
-                            ),
-                          ) : SizedBox.shrink(),
+                          showMap
+                              ? GoogleMap(
+                                  onMapCreated: _onMapCreated,
+                                  markers: Set<Marker>.from(markers.values),
+                                  initialCameraPosition: CameraPosition(
+                                      target: LatLng(
+                                          businessArgs
+                                              .business.metadata.latLng[0],
+                                          businessArgs
+                                              .business.metadata.latLng[1]),
+                                      zoom: 17.0),
+                                )
+                              : SizedBox.shrink(),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: RaisedButton(

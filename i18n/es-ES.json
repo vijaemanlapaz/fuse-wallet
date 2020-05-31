@@ -104,5 +104,8 @@
   "received_from_ethereum": "Received from Ethereum",
   "addDai": "Add DAI",
   "withdrawDAI": "Withdraw DAI",
-  "sendToCashMode": "Send to cash mode"
+  "sendToCashMode": "Send to cash mode",
+  "copy_to_clipboard": "Copiar al Portapapeles",
+  "copied_to_clipboard": "Copiado al portapapeles",
+  "more_details": "Más detalles"
 }

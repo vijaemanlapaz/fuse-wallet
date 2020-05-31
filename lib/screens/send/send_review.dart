@@ -57,7 +57,8 @@ class _SendReviewScreenState extends State<SendReviewScreen>
         viewModel.sendToCashMode(
             args.amount, sendSuccessCallback, sendFailureCallback);
       } else {
-        viewModel.sendToErc20Token(args.erc20Token, args.accountAddress, args.amount, sendSuccessCallback, sendFailureCallback);
+        viewModel.sendToErc20Token(args.erc20Token, args.accountAddress,
+            args.amount, sendSuccessCallback, sendFailureCallback);
       }
     } else {
       if (args.accountAddress == null ||
@@ -290,7 +291,7 @@ class _SendReviewScreenState extends State<SendReviewScreen>
                             padding:
                                 EdgeInsets.only(top: 20.0, left: 30, right: 30),
                             child: Text(
-                                '''Sending money to ${args.name != null ? args.name : 'friend'} will automatically invite them to Fuse and let them redeem the funds you sent''',
+                                '''${args.name != null ? args.name : 'friend'} aún no tiene cuenta en Wikibank, al enviarle estos fondos recibirá una invitación para abrirse una cuenta y de esta forma poder utilizarlos''',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color:

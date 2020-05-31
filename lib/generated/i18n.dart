@@ -246,6 +246,12 @@ class I18n implements WidgetsLocalizations {
   String get withdrawDAI => "Withdraw DAI";
   /// "Send to cash mode"
   String get sendToCashMode => "Send to cash mode";
+  /// "Copy to clipboard"
+  String get copy_to_clipboard => "Copy to clipboard";
+  /// "Copied to Clipboard"
+  String get copied_to_clipboard => "Copied to Clipboard";
+  /// "More details"
+  String get more_details => "More details";
 }
 
 class _I18n_en_US extends I18n {
@@ -899,6 +905,15 @@ class _I18n_es_ES extends I18n {
   /// "Send to cash mode"
   @override
   String get sendToCashMode => "Send to cash mode";
+  /// "Copiar al Portapapeles"
+  @override
+  String get copy_to_clipboard => "Copiar al Portapapeles";
+  /// "Copiado al portapapeles"
+  @override
+  String get copied_to_clipboard => "Copiado al portapapeles";
+  /// "Más detalles"
+  @override
+  String get more_details => "Más detalles";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
