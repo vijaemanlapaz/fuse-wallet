@@ -38,9 +38,7 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
     if (webUrl != null && webUrl.isNotEmpty) {
       return [
         CashHomeScreen(),
-        !hasContactsInStore
-            ? SendToContactScreen()
-            : ContactsList(contacts: contacts),
+        !hasContactsInStore ? SendToContactScreen() : ContactsList(),
         WebViewPage(
           pageArgs: WebViewPageArguments(
               url: webUrl,
@@ -52,9 +50,7 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
     } else {
       return [
         CashHomeScreen(),
-        !hasContactsInStore
-            ? SendToContactScreen()
-            : ContactsList(contacts: contacts),
+        !hasContactsInStore ? SendToContactScreen() : ContactsList(),
         BuyScreen(),
         ReceiveScreen()
       ];

@@ -316,11 +316,11 @@ ThunkAction syncContactsCall(List<Contact> contacts) {
             Map<String, dynamic> response = await phoneNumberUtil.parse(value);
             return response['e164'];
           } catch (e) {
-            String phoneNum = formatPhoneNumber(phone.value, countryCode);
-            bool isValid = await PhoneService.isValid(phoneNum, isoCode);
+            String formatted = formatPhoneNumber(value, countryCode);
+            bool isValid = await PhoneService.isValid(formatted, isoCode);
             if (isValid) {
-              String ph = await PhoneService.getNormalizedPhoneNumber(phoneNum, isoCode);
-              return ph;
+              String phoneNum = await PhoneService.getNormalizedPhoneNumber(formatted, isoCode);
+              return  phoneNum;
             }
             return '';
           }
@@ -359,7 +359,7 @@ ThunkAction syncContactsCall(List<Contact> contacts) {
 
 ThunkAction identifyFirstTimeCall() {
   return (Store store) async {
-    String fullPhoneNumber = store.state.userState.normalizedPhoneNumber ?? '';// formatPhoneNumber(store.state.userState.phoneNumber, store.state.userState.countryCode);
+    String fullPhoneNumber = store.state.userState.normalizedPhoneNumber ?? '';
     store.dispatch(enablePushNotifications());
     store.dispatch(segmentAliasCall(fullPhoneNumber));
     store.dispatch(segmentIdentifyCall(
@@ -376,7 +376,6 @@ ThunkAction identifyFirstTimeCall() {
 
 ThunkAction identifyCall() {
   return (Store store) async {
-    // String fullPhoneNumber = formatPhoneNumber(store.state.userState.phoneNumber, store.state.userState.countryCode);
     store.dispatch(segmentIdentifyCall(
         new Map<String, dynamic>.from({
           "Phone Number": store.state.userState.normalizedPhoneNumber ?? '',

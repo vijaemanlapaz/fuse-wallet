@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
 import 'package:supervecina/generated/i18n.dart';
 import 'package:supervecina/models/community.dart';
-import 'package:supervecina/models/plugins.dart';
+import 'package:supervecina/models/plugins/plugins.dart';
 import 'package:supervecina/screens/cash_home/webview_page.dart';
 import 'package:supervecina/screens/pro_routes.gr.dart';
 import 'package:supervecina/screens/routes.gr.dart';

@@ -1,4 +1,5 @@
-import 'dart:core';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
@@ -19,9 +20,6 @@ import 'package:supervecina/widgets/preloader.dart';
 import 'package:supervecina/widgets/silver_app_bar.dart';
 
 class ContactsList extends StatefulWidget {
-  final List<Contact> contacts;
-  ContactsList({this.contacts});
-
   @override
   _ContactsListState createState() => _ContactsListState();
 }
@@ -29,7 +27,9 @@ class ContactsList extends StatefulWidget {
 class _ContactsListState extends State<ContactsList> {
   List<Contact> userList = [];
   List<Contact> filteredUsers = [];
+  bool hasSynced = false;
   TextEditingController searchController = TextEditingController();
+  bool isPreloading = false;
   List<Contact> _contacts;
 
   @override
@@ -54,8 +54,7 @@ class _ContactsListState extends State<ContactsList> {
   }
 
   Future<void> refreshContacts() async {
-    List<Contact> contacts = await ContactController.getContacts()
-      ..toList();
+    List<Contact> contacts = await ContactController.getContacts();
     if (mounted) {
       setState(() {
         _contacts = contacts;
@@ -63,17 +62,17 @@ class _ContactsListState extends State<ContactsList> {
     }
 
     filterList();
-    searchController.addListener(() {
-      filterList();
-    });
+    searchController.addListener(filterList);
 
-    for (final contact in contacts) {
-      ContactsService.getAvatar(contact).then((avatar) {
-        if (avatar == null) return;
-        if (mounted) {
-          setState(() => contact.avatar = avatar);
-        }
-      });
+    if (Platform.isAndroid) {
+      for (final contact in contacts) {
+        ContactsService.getAvatar(contact).then((avatar) {
+          if (avatar == null) return;
+          if (mounted) {
+            setState(() => contact.avatar = avatar);
+          }
+        });
+      }
     }
   }
 
@@ -118,18 +117,26 @@ class _ContactsListState extends State<ContactsList> {
     );
   }
 
-  listBody(BuildContext context, ContactsViewModel viewModel, List<Contact> group) {
+  listBody(
+      BuildContext context, ContactsViewModel viewModel, List<Contact> group) {
     List<Widget> listItems = List();
 
     for (Contact user in group) {
-      Iterable<Item> phones = user.phones.map((e) => Item(label: e.label, value: clearNotNumbersAndPlusSymbol(e.value))).toSet().toList();
+      Iterable<Item> phones = user.phones
+          .map((e) => Item(
+              label: e.label, value: clearNotNumbersAndPlusSymbol(e.value)))
+          .toSet()
+          .toList();
       for (Item phone in phones) {
         listItems.add(ContactTile(
             avatar: user.avatar,
             displayName: user.displayName,
             phoneNumber: phone.value,
             onTap: () {
-              sendToContact(context, viewModel, user.displayName, phone.value, avatar: user.avatar);
+              sendToContact(context, viewModel, user.displayName, phone.value,
+                  avatar: user.avatar != null && user.avatar.isNotEmpty
+                      ? MemoryImage(user.avatar)
+                      : new AssetImage('assets/images/anom.png'));
             },
             trailing: Text(
               phone.value,
@@ -143,7 +150,8 @@ class _ContactsListState extends State<ContactsList> {
     );
   }
 
-  Widget sendToAcccountAddress(BuildContext context, ContactsViewModel viewModel, String accountAddress) {
+  Widget sendToAcccountAddress(BuildContext context,
+      ContactsViewModel viewModel, String accountAddress) {
     Widget component = ContactTile(
       displayName: formatAddress(accountAddress),
       onTap: () {
@@ -217,26 +225,24 @@ class _ContactsListState extends State<ContactsList> {
                 child: Padding(
                   padding: EdgeInsets.only(right: 20),
                   child: TextFormField(
-                      controller: searchController,
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(0.0),
-                        border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Color(0xFFE0E0E0), width: 3)),
-                        focusedBorder: UnderlineInputBorder(
+                    controller: searchController,
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(0.0),
+                      border: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: const Color(0xFF292929)),
-                        ),
-                        suffixIcon: Icon(
-                          Icons.search,
-                          color: Color(0xFFACACAC),
-                        ),
-                        labelText: I18n.of(context).search,
+                              BorderSide(color: Color(0xFFE0E0E0), width: 3)),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: const Color(0xFF292929)),
                       ),
+                      suffixIcon: Icon(
+                        Icons.search,
+                        color: Color(0xFFACACAC),
+                      ),
+                      labelText: I18n.of(context).search,
                     ),
                 ),
-              ),
+              )),
               Container(
                 child: new FloatingActionButton(
                     heroTag: 'cash_scanner',

@@ -4,9 +4,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supervecina/models/business.dart';
 import 'package:supervecina/models/transactions/transfer.dart';
 import 'package:supervecina/models/views/cash_wallet.dart';
-import 'package:supervecina/utils/forks.dart';
 import 'package:supervecina/utils/format.dart';
 import 'package:supervecina/utils/phone.dart';
+import 'package:supervecina/utils/forks.dart';
 
 String getIPFSImageUrl(String image) {
   return DotEnv().env['IPFS_BASE_URL'] + '/image/' + image;

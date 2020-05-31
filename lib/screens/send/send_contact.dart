@@ -17,8 +17,8 @@ import 'package:supervecina/utils/format.dart';
 import 'package:supervecina/utils/send.dart';
 import 'package:supervecina/widgets/main_scaffold.dart';
 import "package:ethereum_address/ethereum_address.dart";
-import 'package:redux/redux.dart';
 import 'package:supervecina/widgets/silver_app_bar.dart';
+import 'package:redux/redux.dart';
 
 class SendToContactScreen extends StatefulWidget {
   @override
@@ -149,7 +149,9 @@ class _SendToContactScreenState extends State<SendToContactScreen> {
               ),
               onTap: () {
                 sendToContact(context, viewModel, user.displayName, phone.value,
-                    avatar: user.avatar);
+                    avatar: user.avatar != null && user.avatar.isNotEmpty
+                      ? MemoryImage(user.avatar)
+                      : new AssetImage('assets/images/anom.png'));
               },
             ),
           ),
@@ -166,16 +168,6 @@ class _SendToContactScreenState extends State<SendToContactScreen> {
     Widget component = Slidable(
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
-      // secondaryActions: <Widget>[
-      //   IconSlideAction(
-      //     iconWidget: Icon(Icons.star),
-      //     onTap: () {},
-      //   ),
-      //   IconSlideAction(
-      //     iconWidget: Icon(Icons.more_horiz),
-      //     onTap: () {},
-      //   ),
-      // ],
       child: Container(
         decoration: new BoxDecoration(
             border: Border(bottom: BorderSide(color: const Color(0xFFDCDCDC)))),
