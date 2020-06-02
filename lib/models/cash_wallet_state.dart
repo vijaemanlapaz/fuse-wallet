@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:seedbed/models/community.dart';
-import 'package:seedbed/models/plugins.dart';
+import 'package:seedbed/models/plugins/plugins.dart';
 import 'package:wallet_core/wallet_core.dart' as wallet_core;
 import 'package:json_annotation/json_annotation.dart';
 

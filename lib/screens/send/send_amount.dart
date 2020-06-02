@@ -1,8 +1,8 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_segment/flutter_segment.dart';
 import 'package:seedbed/generated/i18n.dart';
-import 'package:seedbed/models/community.dart';
+import 'package:seedbed/models/token.dart';
+import 'package:seedbed/models/views/send_amount.dart';
 import 'package:seedbed/screens/send/send_amount_arguments.dart';
 import 'package:seedbed/screens/send/send_review.dart';
 import 'package:seedbed/utils/format.dart';
@@ -10,9 +10,7 @@ import 'package:seedbed/widgets/main_scaffold.dart';
 import 'package:seedbed/widgets/primary_button.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
 import 'package:seedbed/models/app_state.dart';
-import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:seedbed/models/token.dart';
 
 class SendAmountScreen extends StatefulWidget {
   final SendAmountArguments pageArgs;
@@ -35,8 +33,7 @@ class _SendAmountScreenState extends State<SendAmountScreen>
     super.dispose();
   }
 
-  List<DropdownMenuItem<dynamic>> buildDropdownMenuItems(
-      List<Token> options, Community community) {
+  List<DropdownMenuItem<dynamic>> buildDropdownMenuItems(List<Token> options) {
     return options.map((Token token) {
       return DropdownMenuItem(
         value: token,
@@ -126,7 +123,8 @@ class _SendAmountScreenState extends State<SendAmountScreen>
             if (args.sendToCashMode) {
               try {
                 double amount = double.parse(amountText);
-                BigInt currentBalance = toBigInt(amount, args.erc20Token.decimals);
+                BigInt currentBalance =
+                    toBigInt(amount, args.erc20Token.decimals);
                 if (amount > 0 && args.erc20Token.amount >= currentBalance) {
                   controller.forward();
                 } else {
@@ -138,7 +136,8 @@ class _SendAmountScreenState extends State<SendAmountScreen>
             } else {
               try {
                 double amount = double.parse(amountText);
-                BigInt currentBalance = toBigInt(amount, args.erc20Token.decimals);
+                BigInt currentBalance =
+                    toBigInt(amount, args.erc20Token.decimals);
                 if (amount > 0 && args.erc20Token.amount >= currentBalance) {
                   controller.forward();
                 } else {
@@ -154,7 +153,8 @@ class _SendAmountScreenState extends State<SendAmountScreen>
                   ? viewModel.balance
                   : viewModel.secondaryTokenBalance;
               double amount = double.parse(amountText);
-              if (amount > 0 && balance >= toBigInt(amount, dropdownValue.decimals)) {
+              if (amount > 0 &&
+                  balance >= toBigInt(amount, dropdownValue.decimals)) {
                 controller.forward();
               } else {
                 controller.reverse();
@@ -164,11 +164,18 @@ class _SendAmountScreenState extends State<SendAmountScreen>
             }
           }
         }
+
         List dropOptions;
-        bool hasSecondToken = viewModel.community.secondaryToken != null && (viewModel.community.secondaryToken.address != null && viewModel.community.secondaryToken.address != '');
+        bool hasSecondToken = viewModel.community.secondaryToken != null &&
+            (viewModel.community.secondaryToken.address != null &&
+                viewModel.community.secondaryToken.address != '');
         if (hasSecondToken) {
-          dropOptions = buildDropdownMenuItems(viewModel.tokens, viewModel.community);
+          dropOptions = buildDropdownMenuItems(viewModel.tokens);
         }
+
+        String symbol = args.erc20Token != null
+            ? args.erc20Token.symbol
+            : viewModel.token.symbol;
         return MainScaffold(
             withPadding: true,
             title: title,
@@ -206,10 +213,7 @@ class _SendAmountScreenState extends State<SendAmountScreen>
                                                     .primaryColor,
                                                 fontSize: 50,
                                                 fontWeight: FontWeight.w900)),
-                                        Text(
-                                            args.erc20Token != null
-                                                ? args.erc20Token.symbol
-                                                : viewModel.token.symbol,
+                                        Text(symbol,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -327,47 +331,4 @@ class _SendAmountScreenState extends State<SendAmountScreen>
       },
     );
   }
-}
-
-class SendAmountViewModel extends Equatable {
-  final BigInt balance;
-  final BigInt secondaryTokenBalance;
-  final Token token;
-  final bool isProMode;
-  final Community community;
-  final List<Token> tokens;
-
-  SendAmountViewModel(
-      {this.balance,
-      this.token,
-      this.isProMode,
-      this.community,
-      this.tokens,
-      this.secondaryTokenBalance});
-
-  static SendAmountViewModel fromStore(Store<AppState> store) {
-    String communityAddres = store.state.cashWalletState.communityAddress;
-    Community community =
-        store.state.cashWalletState.communities[communityAddres] ??
-            new Community.initial();
-    List<Token> tokens = List.from([])
-      ..addAll([community.token, community.secondaryToken]);
-    return SendAmountViewModel(
-        isProMode: store.state.userState.isProMode ?? false,
-        token: community.token,
-        balance: community.tokenBalance,
-        community: community,
-        tokens: tokens,
-        secondaryTokenBalance: community.secondaryTokenBalance);
-  }
-
-  @override
-  List<Object> get props => [
-        isProMode,
-        tokens,
-        token,
-        balance,
-        community,
-        secondaryTokenBalance,
-      ];
 }

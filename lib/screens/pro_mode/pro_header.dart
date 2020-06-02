@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:seedbed/models/community.dart';
+import 'package:seedbed/models/plugins/fee_base.dart';
 import 'package:seedbed/models/pro/token.dart';
 import 'package:seedbed/redux/actions/cash_wallet_actions.dart';
 import 'package:seedbed/utils/addresses.dart';
@@ -146,7 +148,7 @@ class ProHeader extends StatelessWidget {
                                 ],
                               ),
                               onPressed: () {
-                                bracodeScannerHandler(context, isProMode: true, daiToken: viewModel.daiToken);
+                                bracodeScannerHandler(context, isProMode: true, daiToken: viewModel.daiToken, feePlugin: viewModel.feePlugin);
                               },
                               child: Image.asset(
                                 'assets/images/scan.png',
@@ -171,14 +173,17 @@ class _ProHeaderViewModel extends Equatable {
   final Function() firstName;
   final Token daiToken;
   final Function(Map<String, dynamic> traits) idenyifyCall;
+  final FeePlugin feePlugin;
 
-  _ProHeaderViewModel({this.firstName, this.daiToken, this.idenyifyCall});
+  _ProHeaderViewModel({this.firstName, this.daiToken, this.idenyifyCall, this.feePlugin,});
 
   static _ProHeaderViewModel fromStore(Store<AppState> store) {
     Token token = store.state.proWalletState.erc20Tokens.containsKey(daiTokenAddress)
         ? store.state.proWalletState.erc20Tokens[daiTokenAddress]
         : new Token.initial();
+    Community community = store.state.cashWalletState.communities[defaultCommunityAddress];
     return _ProHeaderViewModel(
+        feePlugin: community.plugins.foreignTransfers,
         daiToken: token,
         firstName: () {
           String fullName = store.state.userState.displayName ?? '';
@@ -190,5 +195,5 @@ class _ProHeaderViewModel extends Equatable {
   }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [daiToken, feePlugin];
 }

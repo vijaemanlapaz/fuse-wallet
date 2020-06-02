@@ -5,7 +5,6 @@ import 'package:seedbed/models/business.dart';
 import 'package:seedbed/models/transactions/transfer.dart';
 import 'package:seedbed/models/views/cash_wallet.dart';
 import 'package:seedbed/utils/forks.dart';
-// import 'package:seedbed/utils/forks.dart';
 import 'package:seedbed/utils/format.dart';
 import 'package:seedbed/utils/phone.dart';
 
@@ -32,6 +31,9 @@ Contact getContact(Transfer transfer, Map<String, String> reverseContacts,
     if (contacts == null) return null;
     for (Contact contact in contacts) {
       for (Item contactPhoneNumber in contact.phones.toList()) {
+        if (clearNotNumbersAndPlusSymbol(contactPhoneNumber.value) == phoneNumber) {
+          return contact;
+        }
         if (formatPhoneNumber(contactPhoneNumber.value, countryCode) ==
             phoneNumber) {
           return contact;

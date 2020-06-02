@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:seedbed/models/pro/token.dart';
 import 'package:seedbed/models/token.dart' as token;
+import 'package:seedbed/models/plugins/fee_base.dart';
 
 enum SendType {
   CONTACT,
@@ -22,6 +23,7 @@ class SendAmountArguments {
   bool isProMode = false;
   Token erc20Token;
   token.Token tokenToSend;
+  FeePlugin feePlugin;
 
   SendAmountArguments(
       {this.sendToCashMode = false,
@@ -32,5 +34,6 @@ class SendAmountArguments {
       this.erc20Token,
       this.accountAddress,
       this.amount,
+      this.feePlugin,
       this.avatar});
 }
