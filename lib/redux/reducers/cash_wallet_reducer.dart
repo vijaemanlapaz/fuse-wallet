@@ -64,7 +64,12 @@ final cashWalletReducers = combineReducers<CashWalletState>([
     TypedReducer<CashWalletState, JobDone>(_jobDone),
     TypedReducer<CashWalletState, JobProcessingStarted>(_jobProcessingStarted),
     TypedReducer<CashWalletState, FetchSecondaryTokenSuccess>(_fetchSecondaryTokenSuccess),
+    TypedReducer<CashWalletState, GetWeeklyRewardSucces>(_getWeeklyRewardSucces),
   ]);
+
+  CashWalletState _getWeeklyRewardSucces(CashWalletState state, GetWeeklyRewardSucces action) {
+    return state.copyWith(nextReward: action.nextReward, currentReward: action.currentReward);
+  }
 
   CashWalletState _fetchSecondaryTokenSuccess(CashWalletState state, FetchSecondaryTokenSuccess action) {
     String communityAddress = state.communityAddress;

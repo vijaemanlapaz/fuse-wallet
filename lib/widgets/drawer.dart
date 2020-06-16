@@ -8,10 +8,9 @@ import 'package:seedbed/models/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:seedbed/models/views/drawer.dart';
 import 'package:seedbed/screens/backup/show_mnemonic.dart';
-import 'package:seedbed/screens/cash_home/switch_commmunity.dart';
 import 'package:seedbed/screens/cash_home/webview_page.dart';
 import 'package:seedbed/screens/misc/settings.dart';
-import 'package:seedbed/utils/forks.dart';
+import 'package:seedbed/screens/reward/change_reward.dart';
 import 'package:seedbed/utils/format.dart';
 
 String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
@@ -106,35 +105,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   }
 
   List<Widget> menuItem(DrawerViewModel viewModel) {
-    if (isFork()) {
-      return [
-        getListTile(I18n.of(context).backup_wallet, () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => ShowMnemonic()));
-        }, icon: 'backup_icon.svg'),
-        getListTile(I18n.of(context).settings, () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => SettingsScreen()));
-        }, icon: 'settings_icon.svg'),
-      ];
-    } else {
-      return [
-        getListTile(I18n.of(context).switch_community, () {
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => SwitchCommunityScreen()));
-        }, icon: 'switch_icon.svg'),
-        getListTile(I18n.of(context).backup_wallet, () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => ShowMnemonic()));
-        }, icon: 'backup_icon.svg'),
-        getListTile(I18n.of(context).settings, () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => SettingsScreen()));
-        }, icon: 'settings_icon.svg'),
-      ];
-    }
+    return [
+      getListTile(I18n.of(context).backup_wallet, () {
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => ShowMnemonic()));
+      }, icon: 'backup_icon.svg'),
+      getListTile('Reward rate', () {
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => ChangeRewardScreen()));
+      }, icon: 'backup_icon.svg'),
+      getListTile(I18n.of(context).settings, () {
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => SettingsScreen()));
+      }, icon: 'settings_icon.svg'),
+    ];
   }
 
   Widget drawerHeader(DrawerViewModel viewModel) {

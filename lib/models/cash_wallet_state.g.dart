@@ -15,11 +15,16 @@ CashWalletState _$CashWalletStateFromJson(Map<String, dynamic> json) {
     communityAddress: json['communityAddress'] as String,
     communities: CashWalletState._communitiesFromJson(
         json['communities'] as Map<String, dynamic>),
+    nextReward: CashWalletState._rewardFromJson(json['nextReward'] as String),
+    currentReward:
+        CashWalletState._rewardFromJson(json['currentReward'] as String),
   );
 }
 
 Map<String, dynamic> _$CashWalletStateToJson(CashWalletState instance) =>
     <String, dynamic>{
+      'nextReward': instance.nextReward?.toString(),
+      'currentReward': instance.currentReward?.toString(),
       'walletStatus': instance.walletStatus,
       'walletAddress': instance.walletAddress,
       'communityManagerAddress': instance.communityManagerAddress,

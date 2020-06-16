@@ -13,8 +13,6 @@ import 'package:seedbed/screens/misc/settings.dart';
 import 'package:seedbed/utils/forks.dart';
 import 'package:seedbed/utils/format.dart';
 
-String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
-
 class DrawerWidget extends StatefulWidget {
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();

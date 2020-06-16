@@ -9,6 +9,12 @@ part 'cash_wallet_state.g.dart';
 @immutable
 @JsonSerializable(explicitToJson: true)
 class CashWalletState {
+  @JsonKey(
+      fromJson: _rewardFromJson)
+  final BigInt nextReward;
+  @JsonKey(
+      fromJson: _rewardFromJson)
+  final BigInt currentReward;
   final String walletStatus;
   final String walletAddress;
   final String communityManagerAddress;
@@ -42,6 +48,8 @@ class CashWalletState {
   final bool isJobProcessingStarted;
   @JsonKey(ignore: true)
   final Map<String, num> sendToInvites;
+
+  static BigInt _rewardFromJson(String value) => value == null ? BigInt.zero : BigInt.parse(value);
 
   static Map<String, Community> _communitiesFromJson(
       Map<String, dynamic> list) {
@@ -83,7 +91,9 @@ class CashWalletState {
       this.isBranchDataReceived,
       this.isCommunityBusinessesFetched,
       this.isJobProcessingStarted,
-      this.communities});
+      this.communities,
+      this.nextReward,
+      this.currentReward});
 
   factory CashWalletState.initial() {
     return new CashWalletState(
@@ -103,7 +113,9 @@ class CashWalletState {
         isTransfersFetchingStarted: false,
         isJobProcessingStarted: false,
         sendToInvites: new Map<String, num>(),
-        communities: new Map<String, Community>());
+        communities: new Map<String, Community>(),
+        currentReward: BigInt.zero,
+        nextReward: BigInt.zero);
   }
 
   CashWalletState copyWith(
@@ -124,10 +136,14 @@ class CashWalletState {
       bool isJobProcessingStarted,
       Map<String, num> sendToInvites,
       Plugins plugins,
+      BigInt currentReward,
+      BigInt nextReward,
       Map<String, Community> communities}) {
     return CashWalletState(
         web3: web3 ?? this.web3,
         walletAddress: walletAddress ?? this.walletAddress,
+        nextReward: nextReward ?? this.nextReward,
+        currentReward: currentReward ?? this.currentReward,
         communityManagerAddress: communityManagerAddress ?? this.communityManagerAddress,
         transferManagerAddress: transferManagerAddress ?? this.transferManagerAddress,
         walletStatus: walletStatus ?? this.walletStatus,

@@ -985,6 +985,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  span_builder:
+    dependency: "direct main"
+    description:
+      name: span_builder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   sqflite:
     dependency: transitive
     description:
@@ -1128,10 +1135,10 @@ packages:
   wallet_core:
     dependency: "direct main"
     description:
-      name: wallet_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3"
+      path: "../wallet_core"
+      relative: true
+    source: path
+    version: "0.2.3+3"
   watcher:
     dependency: transitive
     description:
