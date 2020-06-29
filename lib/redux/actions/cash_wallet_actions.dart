@@ -1093,14 +1093,14 @@ ThunkAction fetchSecondaryTokenCall(String tokenAddress) {
           symbol: tokenInfo["symbol"],
           decimals: tokenInfo["decimals"]);
       store.dispatch(FetchSecondaryTokenSuccess(token: secondaryToken));
-      store.dispatch(fetchRewardInfo());
-    } catch (e, s) {
+      store.dispatch(getRewardsInfo());
+    } catch (e) {
       logger.info('ERROR - fetchSecondaryTokenCall $e');
     }
   };
 }
 
-ThunkAction fetchRewardInfo() {
+ThunkAction getRewardsInfo() {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
@@ -1108,19 +1108,19 @@ ThunkAction fetchRewardInfo() {
       if (web3 == null) {
         throw "Web3 is empty";
       }
-      dynamic response = await web3.reserveRatioWeeklyReward();
+      dynamic mintedReward = await web3.getRewardsInfo();
       store.dispatch(GetWeeklyRewardSucces(
-          currentReward: response['currentWeeklyReward'],
-          nextReward: response['nextWeeklyReward']));
-    } catch (e, s) {
-      logger.severe('ERROR - fetchRewardInfo $e');
+          currentReward: mintedReward['mintedReward'],
+          nextReward: mintedReward['newMintedReward']));
+    } catch (e) {
+      logger.severe('ERROR - getMintedReward $e');
     }
   };
 }
 
-ThunkAction setReserveRatioWeeklyReward(
-  nom,
-  dnom,
+ThunkAction setMintedReward(
+  BigInt nom,
+  BigInt dnom,
   VoidCallback sendSuccessCallback,
   VoidCallback sendFailureCallback,
 ) {
@@ -1132,15 +1132,17 @@ ThunkAction setReserveRatioWeeklyReward(
       if (web3 == null) {
         throw "Web3 is empty";
       }
-      dynamic data = web3.setReserveRatioWeeklyReward([nom, dnom]);
-      dynamic result = await api.callContract(
-          web3, walletAddress, web3.getDefaultCommunity(), 0, data);
-      dynamic a = await web3.reserveRatioWeeklyReward();
-      store.dispatch(GetWeeklyRewardSucces(
-          currentReward: a['currentWeeklyReward'],
-          nextReward: a['nextWeeklyReward']));
-    } catch (e, s) {
-      logger.severe('ERROR - fetchRewardInfo $e');
+      logger.info('nom, nom nom nom nom ${nom.toString()}');
+      logger.info('dnom dnom dnom dnom dnom  ${dnom.toString()}');
+      dynamic data = await web3.setMintedReward([nom, dnom]);
+      dynamic response = await api.callContract(web3, walletAddress,
+          DotEnv().env['RESERVE_CONTRACT_ADDRESS'], 0, data);
+      dynamic jobId = response['job']['_id'];
+      sendSuccessCallback();
+      logger.info('Job $jobId for calling setWeeklyReward');
+    } catch (e) {
+      logger.severe('ERROR - setMintedReward $e');
+      sendFailureCallback();
     }
   };
 }

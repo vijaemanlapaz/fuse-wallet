@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:seedbed/redux/actions/cash_wallet_actions.dart';
+import 'package:seedbed/screens/routes.gr.dart';
 import 'package:seedbed/utils/format.dart';
 import 'package:seedbed/widgets/my_app_bar.dart';
 import 'package:seedbed/widgets/primary_button.dart';
@@ -16,6 +17,7 @@ class ChangeRewardScreen extends StatefulWidget {
 
 class _ChangeRewardScreenState extends State<ChangeRewardScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool isPrimaryPreloading = false;
   num amount;
   @override
   Widget build(BuildContext context) {
@@ -24,30 +26,32 @@ class _ChangeRewardScreenState extends State<ChangeRewardScreen> {
         builder: (_, viewModel) {
           String currentReward = formatValue(viewModel.currentReward, 18);
           String next = formatValue(viewModel.nextReward, 18);
-          final spans = SpanBuilder('''The reward rate will be changed per
+          final List<InlineSpan> spans =
+              SpanBuilder('''The reward rate will be changed per
 your request in the beginning of the
 upcoming week on the 10.5.20
 to reward rate of $next%''')
-              .apply(TextSpan(
-                  text: "10.5.20",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      decoration: TextDecoration.underline)))
-              .apply(TextSpan(
-                  text: next,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline)))
-              .build();
+                  .apply(TextSpan(
+                      text: "10.5.20",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          decoration: TextDecoration.underline)))
+                  .apply(TextSpan(
+                      text: next,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline)))
+                  .build();
 
-          final current =
+          final List<InlineSpan> current =
               SpanBuilder('''Current reward rate - $currentReward''')
                   .apply(TextSpan(
                       text: currentReward,
                       style: TextStyle(fontWeight: FontWeight.bold)))
                   .build();
+
           return Scaffold(
               appBar: MyAppBar(
                 height: 230.0,
@@ -80,7 +84,7 @@ to reward rate of $next%''')
                           bottomLeft: Radius.circular(30.0),
                           bottomRight: Radius.circular(30.0))),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
@@ -98,10 +102,7 @@ to reward rate of $next%''')
                           text: TextSpan(
                               children: spans,
                               style: TextStyle(
-                                  fontSize: 18,
-                                  // letterSpacing: .8,
-                                  // wordSpacing: .4,
-                                  color: Color(0xFFC6C6C6))))
+                                  fontSize: 18, color: Color(0xFFC6C6C6))))
                     ],
                   ),
                 ),
@@ -116,7 +117,7 @@ to reward rate of $next%''')
                       Text('Change reward rate',
                           style: TextStyle(
                               color: Color(0xFF979797),
-                              fontSize: 12.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.normal)),
                       Expanded(
                         child: Form(
@@ -141,18 +142,22 @@ to reward rate of $next%''')
                                     }
                                   },
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(0.0),
-                                    border: OutlineInputBorder(
+                                      contentPadding: EdgeInsets.all(0.0),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(0xFFE0E0E0),
+                                              width: 3)),
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xFFE0E0E0),
-                                            width: 3)),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: const Color(0xFF292929)),
-                                    ),
-                                    labelText: 'Enter amount',
-                                    labelStyle: TextStyle(fontSize: 12.0,)
-                                  ),
+                                            color: const Color(0xFF292929)),
+                                      ),
+                                      labelText: 'Enter amount',
+                                      hintStyle: TextStyle(
+                                        fontSize: 13.0,
+                                      ),
+                                      labelStyle: TextStyle(
+                                        fontSize: 13.0,
+                                      )),
                                   onSaved: (String value) {
                                     try {
                                       this.amount = num.parse(value);
@@ -167,14 +172,28 @@ to reward rate of $next%''')
                                   PrimaryButton(
                                     fontSize: 15,
                                     label: 'Change',
+                                    preload: isPrimaryPreloading,
                                     labelFontWeight: FontWeight.normal,
                                     onPressed: () {
-                                      // Validate returns true if the form is valid, otherwise false.
                                       if (_formKey.currentState.validate()) {
                                         _formKey.currentState.save();
-                                        print(this.amount);
+                                        setState(() {
+                                          isPrimaryPreloading = true;
+                                        });
+                                        viewModel.setReward(
+                                            toBigInt(this.amount, 27),
+                                            toBigInt(100, 27), () {
+                                          Router.navigator
+                                              .pushNamedAndRemoveUntil(
+                                                  Router.cashHomeScreen,
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                        }, () {
+                                          setState(() {
+                                            isPrimaryPreloading = false;
+                                          });
+                                        });
                                       }
-                                      viewModel.setReserveRatio();
                                     },
                                   )
                                 ],
@@ -192,16 +211,26 @@ to reward rate of $next%''')
 class _ChangeRewardViewModel extends Equatable {
   final BigInt nextReward;
   final BigInt currentReward;
-  final Function setReserveRatio;
+  final Function(
+    BigInt nom,
+    BigInt dnom,
+    VoidCallback sendSuccessCallback,
+    VoidCallback sendFailureCallback,
+  ) setReward;
 
-  _ChangeRewardViewModel({this.nextReward, this.currentReward, this.setReserveRatio});
-// setReserveRatioWeeklyReward
+  _ChangeRewardViewModel({this.nextReward, this.currentReward, this.setReward});
   static _ChangeRewardViewModel fromStore(Store<AppState> store) {
     return _ChangeRewardViewModel(
         currentReward: store.state.cashWalletState.currentReward,
         nextReward: store.state.cashWalletState.nextReward,
-        setReserveRatio: () {
-          store.dispatch(setReserveRatioWeeklyReward());
+        setReward: (
+          BigInt nom,
+          BigInt dnom,
+          VoidCallback sendSuccessCallback,
+          VoidCallback sendFailureCallback,
+        ) {
+          store.dispatch(setMintedReward(
+              nom, dnom, sendSuccessCallback, sendFailureCallback));
         });
   }
 

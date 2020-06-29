@@ -2,22 +2,24 @@ import 'dart:math';
 
 import 'package:decimal/decimal.dart';
 
-String formatValue(BigInt value, int decimals, {int fractionDigits = 2}) {
+String formatValue(BigInt value, int decimals,
+    {int fractionDigits = 2, bool withPrecision = true}) {
   if (value == null || decimals == null) return '';
   double formatedValue = value / BigInt.from(pow(10, decimals));
+  if (!withPrecision) return formatedValue.toString();
   Decimal decimalValue = Decimal.parse(formatedValue.toString());
-  return decimalValue.scale > 5
-      ? decimalValue.toStringAsPrecision(2)
-      : decimalValue.toString();
+  return decimalValue.isInteger
+      ? decimalValue.toString()
+      : decimalValue.toStringAsFixed(1);
 }
 
 String calcValueInDollar(BigInt value, int decimals) {
   if (value == null || decimals == null) return '';
-  double formatedValue1 = (value / BigInt.from(pow(10, decimals)) / 100);
-  Decimal decimalValue = Decimal.parse(formatedValue1.toString());
-  return decimalValue.scale > 5
-      ? decimalValue.toStringAsPrecision(3)
-      : decimalValue.toString();
+  double formatedValue = (value / BigInt.from(pow(10, decimals)) / 100);
+  Decimal decimalValue = Decimal.parse(formatedValue.toString());
+  return decimalValue.isInteger
+      ? decimalValue.toString()
+      : decimalValue.toStringAsFixed(1);
 }
 
 String formatAddress(String address) {
