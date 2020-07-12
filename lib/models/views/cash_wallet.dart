@@ -1,15 +1,15 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/community.dart';
-import 'package:fusecash/models/transactions/transactions.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/community.dart';
+import 'package:ceu_do_mapia/models/transactions/transactions.dart';
 import 'package:redux/redux.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/token.dart';
-import 'package:fusecash/models/transactions/transaction.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/token.dart';
+import 'package:ceu_do_mapia/models/transactions/transaction.dart';
 
-import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
-import 'package:fusecash/redux/actions/user_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/cash_wallet_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/user_actions.dart';
 import 'package:contacts_service/contacts_service.dart';
 
 class CashWalletViewModel extends Equatable {

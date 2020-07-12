@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
-import 'package:fusecash/redux/actions/error_actions.dart';
-import 'package:fusecash/redux/actions/user_actions.dart';
-import 'package:fusecash/redux/state/store.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/services.dart';
-import 'package:fusecash/utils/phone.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/redux/actions/cash_wallet_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/error_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/user_actions.dart';
+import 'package:ceu_do_mapia/redux/state/store.dart';
+import 'package:ceu_do_mapia/screens/routes.gr.dart';
+import 'package:ceu_do_mapia/services.dart';
+import 'package:ceu_do_mapia/utils/phone.dart';
 import 'package:redux/redux.dart';
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 
@@ -26,9 +26,9 @@ Middleware<AppState> _createLoginRequestMiddleware() {
     if (action is LoginRequest) {
       try {
         store.dispatch(SetIsLoginRequest(isLoading: true));
-        String normalizedPhoneNumber = await PhoneService.getNormalizedPhoneNumber(formatPhoneNumber(action.phoneNumber, action.countryCode.dialCode), action.countryCode.code);
+        String phone = await PhoneService.getNormalizedPhoneNumber('${action.countryCode.dialCode}${action.phoneNumber}', action.countryCode.code);
         await firebaseAuth.verifyPhoneNumber(
-          phoneNumber: normalizedPhoneNumber,
+          phoneNumber: phone,
           codeAutoRetrievalTimeout: action.codeAutoRetrievalTimeout,
           codeSent: action.codeSent,
           timeout: Duration(minutes: 2),
@@ -40,10 +40,10 @@ Middleware<AppState> _createLoginRequestMiddleware() {
           phoneNumber: action.phoneNumber,
           email: "",
           displayName: "",
-          normalizedPhoneNumber: normalizedPhoneNumber
+          normalizedPhoneNumber: phone
         ));
-        store.dispatch(segmentAliasCall(normalizedPhoneNumber));
-        store.dispatch(segmentTrackCall("Wallet: user insert his phone number", properties: new Map<String, dynamic>.from({ "Phone number": normalizedPhoneNumber })));
+        store.dispatch(segmentAliasCall(phone));
+        store.dispatch(segmentTrackCall("Wallet: user insert his phone number", properties: new Map<String, dynamic>.from({ "Phone number": phone })));
       }
       catch (e, s) {
         store.dispatch(SetIsLoginRequest(isLoading: false));

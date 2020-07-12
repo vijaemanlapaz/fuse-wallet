@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
 import 'package:contacts_service/contacts_service.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/views/contacts.dart';
-import 'package:fusecash/screens/send/contact_tile.dart';
-import 'package:fusecash/screens/send/recent_contacts.dart';
-import 'package:fusecash/utils/barcode.dart';
-import 'package:fusecash/utils/contacts.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/utils/phone.dart';
-import 'package:fusecash/utils/send.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/views/contacts.dart';
+import 'package:ceu_do_mapia/screens/send/contact_tile.dart';
+import 'package:ceu_do_mapia/screens/send/recent_contacts.dart';
+import 'package:ceu_do_mapia/utils/barcode.dart';
+import 'package:ceu_do_mapia/utils/contacts.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
+import 'package:ceu_do_mapia/utils/phone.dart';
+import 'package:ceu_do_mapia/utils/send.dart';
+import 'package:ceu_do_mapia/widgets/main_scaffold.dart';
 import "package:ethereum_address/ethereum_address.dart";
-import 'package:fusecash/widgets/preloader.dart';
-import 'package:fusecash/widgets/silver_app_bar.dart';
+import 'package:ceu_do_mapia/widgets/preloader.dart';
+import 'package:ceu_do_mapia/widgets/silver_app_bar.dart';
 
 class ContactsList extends StatefulWidget {
   @override
@@ -129,7 +129,9 @@ class _ContactsListState extends State<ContactsList> {
           .toList();
       for (Item phone in phones) {
         listItems.add(ContactTile(
-            avatar: user.avatar,
+            image: user.avatar != null && user.avatar.isNotEmpty
+                ? MemoryImage(user.avatar)
+                : new AssetImage('assets/images/anom.png'),
             displayName: user.displayName,
             phoneNumber: phone.value,
             onTap: () {

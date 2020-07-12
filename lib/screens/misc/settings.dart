@@ -2,14 +2,14 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/views/drawer.dart';
-import 'package:fusecash/screens/misc/about.dart';
-import 'package:fusecash/screens/splash/splash.dart';
-import 'package:fusecash/utils/forks.dart';
-import 'package:fusecash/widgets/language_selector.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/views/drawer.dart';
+import 'package:ceu_do_mapia/screens/misc/about.dart';
+import 'package:ceu_do_mapia/screens/splash/splash.dart';
+import 'package:ceu_do_mapia/utils/forks.dart';
+import 'package:ceu_do_mapia/widgets/language_selector.dart';
+import 'package:ceu_do_mapia/widgets/main_scaffold.dart';
 
 class SettingsScreen extends StatelessWidget {
   Widget getListTile(context, label, onTap) {

@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:fusecash/models/community.dart';
-import 'package:fusecash/models/plugins/fee_base.dart';
-import 'package:fusecash/models/pro/token.dart';
-import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
-import 'package:fusecash/utils/addresses.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/utils/barcode.dart';
+import 'package:ceu_do_mapia/models/community.dart';
+import 'package:ceu_do_mapia/models/plugins/fee_base.dart';
+import 'package:ceu_do_mapia/models/pro/token.dart';
+import 'package:ceu_do_mapia/redux/actions/cash_wallet_actions.dart';
+import 'package:ceu_do_mapia/utils/addresses.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
+import 'package:ceu_do_mapia/utils/barcode.dart';
 import 'package:redux/redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/widgets/raised_gradient_button.dart';
+import 'package:ceu_do_mapia/widgets/raised_gradient_button.dart';
 
 class ProHeader extends StatelessWidget {
   @override

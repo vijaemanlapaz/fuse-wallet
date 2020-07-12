@@ -1,9 +1,9 @@
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/community_metadata.dart';
-import 'package:fusecash/models/jobs/base.dart';
-import 'package:fusecash/models/plugins/plugins.dart';
-import 'package:fusecash/models/token.dart';
-import 'package:fusecash/models/transactions/transactions.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/community_metadata.dart';
+import 'package:ceu_do_mapia/models/jobs/base.dart';
+import 'package:ceu_do_mapia/models/plugins/plugins.dart';
+import 'package:ceu_do_mapia/models/token.dart';
+import 'package:ceu_do_mapia/models/transactions/transactions.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'community.g.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/transactions/transfer.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/transactions/transfer.dart';
 import 'dart:core';
-import 'package:fusecash/models/views/cash_wallet.dart';
-import 'package:fusecash/screens/cash_home/transaction_row.dart';
-import 'package:fusecash/utils/transaction_row.dart';
+import 'package:ceu_do_mapia/models/views/cash_wallet.dart';
+import 'package:ceu_do_mapia/screens/cash_home/transaction_row.dart';
+import 'package:ceu_do_mapia/utils/transaction_row.dart';
 
 class CashTransactios extends StatefulWidget {
   CashTransactios({@required this.viewModel});

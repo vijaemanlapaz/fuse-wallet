@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fusecash/models/plugins/fee_base.dart';
-import 'package:fusecash/models/views/contacts.dart';
-import 'package:fusecash/screens/send/send_amount.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/services.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/utils/phone.dart';
-import 'package:fusecash/widgets/preloader.dart';
+import 'package:ceu_do_mapia/models/plugins/fee_base.dart';
+import 'package:ceu_do_mapia/models/views/contacts.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount_arguments.dart';
+import 'package:ceu_do_mapia/services.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
+import 'package:ceu_do_mapia/utils/phone.dart';
+import 'package:ceu_do_mapia/widgets/preloader.dart';
 
 void _openLoadingDialog(BuildContext context) {
   showDialog(

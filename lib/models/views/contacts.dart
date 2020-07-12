@@ -1,15 +1,15 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/community.dart';
-import 'package:fusecash/models/plugins/fee_base.dart';
-import 'package:fusecash/models/token.dart';
-import 'package:fusecash/models/pro/token.dart' as erc20Token;
-import 'package:fusecash/models/transactions/transactions.dart';
-import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
-import 'package:fusecash/redux/actions/user_actions.dart';
-import 'package:fusecash/utils/addresses.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/community.dart';
+import 'package:ceu_do_mapia/models/plugins/fee_base.dart';
+import 'package:ceu_do_mapia/models/token.dart';
+import 'package:ceu_do_mapia/models/pro/token.dart' as erc20Token;
+import 'package:ceu_do_mapia/models/transactions/transactions.dart';
+import 'package:ceu_do_mapia/redux/actions/cash_wallet_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/user_actions.dart';
+import 'package:ceu_do_mapia/utils/addresses.dart';
 import 'package:redux/redux.dart';
 
 class ContactsViewModel extends Equatable {

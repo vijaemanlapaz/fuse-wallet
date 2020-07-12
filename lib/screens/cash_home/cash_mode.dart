@@ -1,21 +1,20 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/views/bottom_bar.dart';
-import 'package:fusecash/screens/buy/buy.dart';
-import 'package:fusecash/screens/cash_home/cash_header.dart';
-import 'package:fusecash/screens/cash_home/cash_home.dart';
-import 'package:fusecash/screens/cash_home/dai_explained.dart';
-import 'package:fusecash/screens/cash_home/webview_page.dart';
-import 'package:fusecash/screens/send/contacts_list.dart';
-import 'package:fusecash/screens/send/receive.dart';
-import 'package:fusecash/screens/send/send_contact.dart';
-import 'package:fusecash/widgets/bottom_bar_item.dart';
-import 'package:fusecash/widgets/drawer.dart';
-import 'package:fusecash/widgets/my_app_bar.dart';
-import 'package:fusecash/widgets/tabs_scaffold.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/views/bottom_bar.dart';
+import 'package:ceu_do_mapia/screens/buy/buy.dart';
+import 'package:ceu_do_mapia/screens/cash_home/cash_header.dart';
+import 'package:ceu_do_mapia/screens/cash_home/cash_home.dart';
+import 'package:ceu_do_mapia/screens/cash_home/webview_page.dart';
+import 'package:ceu_do_mapia/screens/send/contacts_list.dart';
+import 'package:ceu_do_mapia/screens/send/receive.dart';
+import 'package:ceu_do_mapia/screens/send/send_contact.dart';
+import 'package:ceu_do_mapia/widgets/bottom_bar_item.dart';
+import 'package:ceu_do_mapia/widgets/drawer.dart';
+import 'package:ceu_do_mapia/widgets/my_app_bar.dart';
+import 'package:ceu_do_mapia/widgets/tabs_scaffold.dart';
 
 class CashModeScaffold extends StatefulWidget {
   final int tabIndex;
@@ -34,7 +33,7 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
   }
 
   List<Widget> _pages(
-      List<Contact> contacts, bool isDefualtCommunity, String webUrl) {
+      BuildContext context, List<Contact> contacts, String webUrl) {
     bool hasContactsInStore = contacts.isNotEmpty;
     if (webUrl != null && webUrl.isNotEmpty) {
       return [
@@ -42,15 +41,10 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
         !hasContactsInStore ? SendToContactScreen() : ContactsList(),
         WebViewPage(
           pageArgs: WebViewPageArguments(
-              url: webUrl, withBack: false, title: 'Community webpage'),
+              url: webUrl,
+              withBack: false,
+              title: I18n.of(context).communityWepbpage),
         ),
-        ReceiveScreen()
-      ];
-    } else if (isDefualtCommunity) {
-      return [
-        CashHomeScreen(),
-        !hasContactsInStore ? SendToContactScreen() : ContactsList(),
-        DaiExplainedScreen(),
         ReceiveScreen()
       ];
     } else {
@@ -69,43 +63,36 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
     });
   }
 
-  BottomNavigationBar _bottomNavigationBar(BottomBarViewModel vm) =>
-      BottomNavigationBar(
-        selectedFontSize: 13,
-        unselectedFontSize: 13,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        backgroundColor: Theme.of(context).bottomAppBarColor,
-        showUnselectedLabels: true,
-        items: [
-          bottomBarItem(I18n.of(context).home, 'home'),
-          bottomBarItem(I18n.of(context).send_button, 'send'),
-          vm.isDefaultCommunity
-              ? bottomBarItem(I18n.of(context).dai_points, 'daipoints')
-              : bottomBarItem(I18n.of(context).buy, 'buy'),
-          bottomBarItem(I18n.of(context).receive, 'receive'),
-        ],
-        onTap: _onTap,
-      );
-
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, BottomBarViewModel>(
         converter: BottomBarViewModel.fromStore,
         builder: (_, vm) {
           final List<Widget> pages =
-              _pages(vm.contacts, vm.isDefaultCommunity, vm.community?.webUrl);
+              _pages(context, vm.contacts, vm.community.webUrl);
           return TabsScaffold(
               header: MyAppBar(
-                height: 230.0,
-                backgroundColor: Colors.white,
                 child: CashHeader(),
               ),
               drawerEdgeDragWidth: 0,
               pages: pages,
               currentIndex: _currentIndex,
               drawer: DrawerWidget(),
-              bottomNavigationBar: _bottomNavigationBar(vm));
+              bottomNavigationBar: BottomNavigationBar(
+                onTap: _onTap,
+                selectedFontSize: 13,
+                unselectedFontSize: 13,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                backgroundColor: Theme.of(context).bottomAppBarColor,
+                showUnselectedLabels: true,
+                items: [
+                  bottomBarItem(I18n.of(context).home, 'home'),
+                  bottomBarItem(I18n.of(context).send_button, 'send'),
+                  bottomBarItem(I18n.of(context).buy, 'buy'),
+                  bottomBarItem(I18n.of(context).receive, 'receive'),
+                ],
+              ));
         });
   }
 }

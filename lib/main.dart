@@ -5,23 +5,23 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/views/splash.dart';
-import 'package:fusecash/redux/actions/cash_wallet_actions.dart';
-import 'package:fusecash/redux/actions/user_actions.dart';
-import 'package:fusecash/redux/state/store.dart';
-import 'package:fusecash/screens/pro_routes.gr.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/themes/app_theme.dart';
-import 'package:fusecash/themes/custom_theme.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/views/splash.dart';
+import 'package:ceu_do_mapia/redux/actions/cash_wallet_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/user_actions.dart';
+import 'package:ceu_do_mapia/redux/state/store.dart';
+import 'package:ceu_do_mapia/screens/pro_routes.gr.dart';
+import 'package:ceu_do_mapia/screens/routes.gr.dart';
+import 'package:ceu_do_mapia/themes/app_theme.dart';
+import 'package:ceu_do_mapia/themes/custom_theme.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/foundation.dart';
-import 'package:fusecash/generated/i18n.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DotEnv().load('.env');
+  await DotEnv().load('.env_prod');
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runZonedGuarded<Future<void>>(() async => runApp(await customThemeApp()),
       (Object error, StackTrace stackTrace) async {
@@ -55,7 +55,8 @@ bool checkIsLoggedIn(Store<AppState> store) {
 Future<CustomTheme> customThemeApp() async {
   Store<AppState> store = await AppFactory().getStore();
 
-  String initialRoute = checkIsLoggedIn(store) ? Router.cashHomeScreen : Router.splashScreen;
+  String initialRoute =
+      checkIsLoggedIn(store) ? Router.cashHomeScreen : Router.splashScreen;
 
   return CustomTheme(
     initialThemeKey: MyThemeKeys.DEFAULT,
@@ -119,7 +120,7 @@ class _MyAppState extends State<MyApp> {
             return new Column(children: <Widget>[
               Expanded(
                   child: MaterialApp(
-                title: 'Fuse Cash',
+                title: 'Ceu Do Mapia',
                 initialRoute: isProMode
                     ? ProRouter.proModeHomeScreen
                     : widget.initialRoute,

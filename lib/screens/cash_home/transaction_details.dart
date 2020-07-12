@@ -1,11 +1,11 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/transactions/transfer.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/utils/transaction_row.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/transactions/transfer.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
+import 'package:ceu_do_mapia/utils/transaction_row.dart';
+import 'package:ceu_do_mapia/widgets/main_scaffold.dart';
 
 class TransactionDetailArguments {
   List<Widget> amount;

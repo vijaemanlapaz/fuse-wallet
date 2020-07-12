@@ -4,14 +4,14 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/community.dart';
-import 'package:fusecash/models/views/switch_community.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/widgets/community_card.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/community.dart';
+import 'package:ceu_do_mapia/models/views/switch_community.dart';
+import 'package:ceu_do_mapia/screens/routes.gr.dart';
+import 'package:ceu_do_mapia/widgets/community_card.dart';
 import 'dart:core';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:ceu_do_mapia/widgets/main_scaffold.dart';
 
 class SwitchCommunityScreen extends StatefulWidget {
   @override

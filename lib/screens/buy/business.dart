@@ -3,13 +3,13 @@ import 'dart:core';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/token.dart';
-import 'package:fusecash/screens/send/send_amount.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/utils/transaction_row.dart';
-import 'package:fusecash/widgets/drawer.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/token.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount_arguments.dart';
+import 'package:ceu_do_mapia/utils/transaction_row.dart';
+import 'package:ceu_do_mapia/widgets/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -40,6 +40,7 @@ class BusinessPage extends StatefulWidget {
 class _BusinessPageState extends State<BusinessPage> {
   GlobalKey<ScaffoldState> scaffoldState;
   Completer<GoogleMapController> _controller = Completer();
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -48,6 +49,28 @@ class _BusinessPageState extends State<BusinessPage> {
   @override
   void initState() {
     super.initState();
+    bool showMap = this.widget.pageArgs.business.metadata.latLng != null &&
+        this.widget.pageArgs.business.metadata.latLng.isNotEmpty;
+    if (showMap) {
+      _add();
+    }
+  }
+
+  void _add() {
+    final String markerIdVal = this.widget.pageArgs.business.name;
+    final MarkerId markerId = MarkerId(markerIdVal);
+    final BusinessPageArguments businessArgs = this.widget.pageArgs;
+    final Marker marker = Marker(
+        markerId: markerId,
+        position: LatLng(businessArgs.business.metadata.latLng[0],
+            businessArgs.business.metadata.latLng[1]),
+        infoWindow: InfoWindow(
+          title: this.widget.pageArgs.business.metadata.address,
+        ));
+
+    setState(() {
+      markers[markerId] = marker;
+    });
   }
 
   @override
@@ -321,6 +344,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                   businessArgs
                                       .business.metadata.latLng.isNotEmpty
                               ? GoogleMap(
+                                  markers: Set<Marker>.from(markers.values),
                                   onMapCreated: _onMapCreated,
                                   initialCameraPosition: CameraPosition(
                                     target: LatLng(
@@ -328,7 +352,7 @@ class _BusinessPageState extends State<BusinessPage> {
                                             .business.metadata.latLng[0],
                                         businessArgs
                                             .business.metadata.latLng[1]),
-                                    zoom: 13.0,
+                                    zoom: 17.0,
                                   ),
                                 )
                               : SizedBox.shrink(),

@@ -7,17 +7,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:fusecash/screens/splash/splash.dart';
-import 'package:fusecash/screens/signup/signup.dart';
-import 'package:fusecash/screens/signup/verify.dart';
-import 'package:fusecash/screens/signup/username.dart';
-import 'package:fusecash/screens/misc/pincode.dart';
-import 'package:fusecash/screens/cash_home/cash_mode.dart';
-import 'package:fusecash/screens/cash_home/transaction_details.dart';
-import 'package:fusecash/screens/buy/business.dart';
-import 'package:fusecash/screens/signup/recovery.dart';
-import 'package:fusecash/screens/buy/map.dart';
-import 'package:fusecash/screens/cash_home/prize.dart';
+import 'package:ceu_do_mapia/screens/splash/splash.dart';
+import 'package:ceu_do_mapia/screens/signup/signup.dart';
+import 'package:ceu_do_mapia/screens/signup/verify.dart';
+import 'package:ceu_do_mapia/screens/signup/username.dart';
+import 'package:ceu_do_mapia/screens/misc/pincode.dart';
+import 'package:ceu_do_mapia/screens/cash_home/cash_mode.dart';
+import 'package:ceu_do_mapia/screens/cash_home/transaction_details.dart';
+import 'package:ceu_do_mapia/screens/buy/business.dart';
+import 'package:ceu_do_mapia/screens/signup/recovery.dart';
+import 'package:ceu_do_mapia/screens/buy/map.dart';
+import 'package:ceu_do_mapia/screens/cash_home/prize.dart';
 
 class Router {
   static const splashScreen = '/splash-screen';

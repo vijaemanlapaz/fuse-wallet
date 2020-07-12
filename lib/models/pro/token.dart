@@ -1,7 +1,7 @@
-import 'package:fusecash/models/jobs/base.dart';
-import 'package:fusecash/models/tokens/base.dart';
-import 'package:fusecash/models/transactions/transactions.dart';
-import 'package:fusecash/services.dart';
+import 'package:ceu_do_mapia/models/jobs/base.dart';
+import 'package:ceu_do_mapia/models/tokens/base.dart';
+import 'package:ceu_do_mapia/models/transactions/transactions.dart';
+import 'package:ceu_do_mapia/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'token.g.dart';

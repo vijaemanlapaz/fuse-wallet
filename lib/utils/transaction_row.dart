@@ -1,11 +1,11 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/transactions/transfer.dart';
-import 'package:fusecash/models/views/cash_wallet.dart';
-import 'package:fusecash/utils/format.dart';
-import 'package:fusecash/utils/phone.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/transactions/transfer.dart';
+import 'package:ceu_do_mapia/models/views/cash_wallet.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
+import 'package:ceu_do_mapia/utils/phone.dart';
 
 String getIPFSImageUrl(String image) {
   return DotEnv().env['IPFS_BASE_URL'] + '/image/' + image;
@@ -30,7 +30,8 @@ Contact getContact(Transfer transfer, Map<String, String> reverseContacts,
     if (contacts == null) return null;
     for (Contact contact in contacts) {
       for (Item contactPhoneNumber in contact.phones.toList()) {
-        if (clearNotNumbersAndPlusSymbol(contactPhoneNumber.value) == phoneNumber) {
+        if (clearNotNumbersAndPlusSymbol(contactPhoneNumber.value) ==
+            phoneNumber) {
           return contact;
         }
         if (formatPhoneNumber(contactPhoneNumber.value, countryCode) ==
@@ -56,7 +57,9 @@ Color deduceColor(Transfer transfer) {
 }
 
 String deducePhoneNumber(Transfer transfer, Map<String, String> reverseContacts,
-    {bool format = true, List<Business> businesses, bool getReverseContact = true}) {
+    {bool format = true,
+    List<Business> businesses,
+    bool getReverseContact = true}) {
   String accountAddress = transfer.type == 'SEND' ? transfer.to : transfer.from;
   if (businesses != null && businesses.isNotEmpty) {
     Business business = businesses.firstWhere(
@@ -78,10 +81,10 @@ String deducePhoneNumber(Transfer transfer, Map<String, String> reverseContacts,
 
 dynamic getTransferImage(
     Transfer transfer, Contact contact, CashWalletViewModel vm) {
-  if (transfer.isJoinCommunity() &&
-      vm.community.metadata.image != null &&
-      vm.community.metadata.image != '') {
-    return new NetworkImage(getIPFSImageUrl(vm.community.metadata.image));
+  if (transfer.isJoinCommunity()) {
+    return new AssetImage(
+      'assets/images/icon_app.png',
+    );
   } else if (transfer.isGenerateWallet()) {
     return new AssetImage(
       'assets/images/generate_wallet.png',
@@ -92,7 +95,11 @@ dynamic getTransferImage(
     );
   } else if (contact?.avatar != null && contact.avatar.isNotEmpty) {
     return new MemoryImage(contact.avatar);
-  } else if (vm.community != null && vm.community.homeBridgeAddress != null && transfer.to != null && transfer.to?.toLowerCase() == vm.community.homeBridgeAddress?.toLowerCase()) {
+  } else if (vm.community != null &&
+      vm.community.homeBridgeAddress != null &&
+      transfer.to != null &&
+      transfer.to?.toLowerCase() ==
+          vm.community.homeBridgeAddress?.toLowerCase()) {
     return new AssetImage(
       'assets/images/ethereume_icon.png',
     );

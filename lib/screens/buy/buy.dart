@@ -2,17 +2,17 @@ import 'dart:core';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/app_state.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/views/buy_page.dart';
-import 'package:fusecash/screens/buy/business.dart';
-import 'package:fusecash/screens/cash_home/webview_page.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/screens/send/send_amount.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/utils/transaction_row.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/app_state.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/views/buy_page.dart';
+import 'package:ceu_do_mapia/screens/buy/business.dart';
+import 'package:ceu_do_mapia/screens/cash_home/webview_page.dart';
+import 'package:ceu_do_mapia/screens/routes.gr.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount_arguments.dart';
+import 'package:ceu_do_mapia/utils/transaction_row.dart';
+import 'package:ceu_do_mapia/widgets/main_scaffold.dart';
 
 class BuyScreen extends StatelessWidget {
   @override
@@ -150,18 +150,16 @@ class BusinessesListView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          FlatButton(
-            padding: EdgeInsets.all(10),
-            shape: CircleBorder(),
-            color: Theme.of(context).buttonColor,
-            child: Text(
-              I18n.of(context).pay,
-              style: TextStyle(
-                  color: Theme.of(context).textTheme.button.color,
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal),
-            ),
-            onPressed: () {
+          InkWell(
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Image.asset(
+                  'assets/images/go.png',
+                  fit: BoxFit.fill,
+                  width: 25,
+                  height: 25,
+                )),
+            onTap: () {
               Navigator.push(
                   context,
                   new MaterialPageRoute(
@@ -172,7 +170,7 @@ class BusinessesListView extends StatelessWidget {
                               name: business.name ?? '',
                               accountAddress: business.account))));
             },
-          ),
+          )
         ],
       ),
     );

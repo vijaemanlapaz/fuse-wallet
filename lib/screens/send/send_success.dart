@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/screens/pro_routes.gr.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
-import 'package:fusecash/widgets/main_scaffold.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/screens/pro_routes.gr.dart';
+import 'package:ceu_do_mapia/screens/routes.gr.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount_arguments.dart';
+import 'package:ceu_do_mapia/widgets/main_scaffold.dart';
 
 class SendSuccessScreen extends StatefulWidget {
   final SendAmountArguments pageArgs;

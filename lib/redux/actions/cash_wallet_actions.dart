@@ -3,30 +3,30 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:fusecash/models/business.dart';
-import 'package:fusecash/models/community.dart';
-import 'package:fusecash/models/community_metadata.dart';
-import 'package:fusecash/models/jobs/base.dart';
-import 'package:fusecash/models/plugins/plugins.dart';
-import 'package:fusecash/models/transactions/transaction.dart';
-import 'package:fusecash/models/transactions/transactions.dart';
-import 'package:fusecash/models/transactions/transfer.dart';
-import 'package:fusecash/models/user_state.dart';
-import 'package:fusecash/redux/actions/error_actions.dart';
+import 'package:ceu_do_mapia/models/business.dart';
+import 'package:ceu_do_mapia/models/community.dart';
+import 'package:ceu_do_mapia/models/community_metadata.dart';
+import 'package:ceu_do_mapia/models/jobs/base.dart';
+import 'package:ceu_do_mapia/models/plugins/plugins.dart';
+import 'package:ceu_do_mapia/models/transactions/transaction.dart';
+import 'package:ceu_do_mapia/models/transactions/transactions.dart';
+import 'package:ceu_do_mapia/models/transactions/transfer.dart';
+import 'package:ceu_do_mapia/models/user_state.dart';
+import 'package:ceu_do_mapia/redux/actions/error_actions.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
-import 'package:fusecash/redux/actions/pro_mode_wallet_actions.dart';
-import 'package:fusecash/redux/actions/user_actions.dart';
-import 'package:fusecash/utils/addresses.dart';
-import 'package:fusecash/redux/state/store.dart';
-import 'package:fusecash/utils/constans.dart';
-import 'package:fusecash/utils/firebase.dart';
-import 'package:fusecash/utils/format.dart';
+import 'package:ceu_do_mapia/redux/actions/pro_mode_wallet_actions.dart';
+import 'package:ceu_do_mapia/redux/actions/user_actions.dart';
+import 'package:ceu_do_mapia/utils/addresses.dart';
+import 'package:ceu_do_mapia/redux/state/store.dart';
+import 'package:ceu_do_mapia/utils/constans.dart';
+import 'package:ceu_do_mapia/utils/firebase.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
 import 'package:http/http.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:wallet_core/wallet_core.dart' as wallet_core;
-import 'package:fusecash/services.dart';
-import 'package:fusecash/models/token.dart';
+import 'package:ceu_do_mapia/services.dart';
+import 'package:ceu_do_mapia/models/token.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -536,7 +536,7 @@ ThunkAction generateWalletSuccessCall(
           networks: networks));
       store.dispatch(segmentIdentifyCall(new Map<String, dynamic>.from({
         "Wallet Generated": true,
-        "App name": 'Fuse',
+        "App name": 'Ceu Do Mapia',
         "Phone Number": store.state.userState.normalizedPhoneNumber,
         "Wallet Address": store.state.cashWalletState.walletAddress,
         "Account Address": store.state.userState.accountAddress,

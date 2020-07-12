@@ -1,15 +1,15 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fusecash/generated/i18n.dart';
-import 'package:fusecash/models/transactions/transaction.dart';
-import 'package:fusecash/models/transactions/transfer.dart';
-import 'package:fusecash/models/views/cash_wallet.dart';
-import 'package:fusecash/screens/routes.gr.dart';
-import 'package:fusecash/utils/addresses.dart';
-import 'package:fusecash/utils/transaction_row.dart';
-import 'package:fusecash/screens/cash_home/transaction_details.dart';
-import 'package:fusecash/utils/format.dart';
+import 'package:ceu_do_mapia/generated/i18n.dart';
+import 'package:ceu_do_mapia/models/transactions/transaction.dart';
+import 'package:ceu_do_mapia/models/transactions/transfer.dart';
+import 'package:ceu_do_mapia/models/views/cash_wallet.dart';
+import 'package:ceu_do_mapia/screens/routes.gr.dart';
+import 'package:ceu_do_mapia/utils/addresses.dart';
+import 'package:ceu_do_mapia/utils/transaction_row.dart';
+import 'package:ceu_do_mapia/screens/cash_home/transaction_details.dart';
+import 'package:ceu_do_mapia/utils/format.dart';
 
 class TransactionListItem extends StatelessWidget {
   final Transaction _transaction;
@@ -32,9 +32,11 @@ class TransactionListItem extends StatelessWidget {
         false;
     bool isWalletCreated = 'created' == this._vm.walletStatus;
     bool isZeroAddress = transfer.from == zeroAddress;
-    ImageProvider<dynamic> image = isZeroAddress ? AssetImage(
-      'assets/images/ethereume_icon.png',
-      ) : getTransferImage(transfer, _contact, _vm);
+    ImageProvider<dynamic> image = isZeroAddress
+        ? AssetImage(
+            'assets/images/ethereume_icon.png',
+          )
+        : getTransferImage(transfer, _contact, _vm);
     String displayName = transfer.isJoinBonus()
         ? (transfer.text ?? I18n.of(context).join_bonus)
         : (transfer.receiverName != null && transfer.receiverName != '')
@@ -140,18 +142,18 @@ class TransactionListItem extends StatelessWidget {
                                               Color(0xFF49D88D).withOpacity(1)),
                                     ))
                                 : SizedBox.shrink(),
-                            _vm.community.metadata.isDefaultImage != null &&
-                                    _vm.community.metadata.isDefaultImage &&
-                                    transfer.isJoinCommunity()
-                                ? Text(
-                                    _vm.community.token.symbol,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  )
-                                : SizedBox.shrink()
+                            // _vm.community.metadata.isDefaultImage != null &&
+                            //         _vm.community.metadata.isDefaultImage &&
+                            //         transfer.isJoinCommunity()
+                            //     ? Text(
+                            //         _vm.community.token.symbol,
+                            //         style: TextStyle(
+                            //           fontSize: 13,
+                            //           fontWeight: FontWeight.bold,
+                            //         ),
+                            //         textAlign: TextAlign.left,
+                            //       )
+                            //     : SizedBox.shrink()
                           ],
                         ),
                       ),
@@ -187,10 +189,11 @@ class TransactionListItem extends StatelessWidget {
                                   )
                                 : Text(
                                     isZeroAddress
-                                      ? I18n.of(context).received_from_ethereum
-                                      : isSendingToForeign
-                                        ? I18n.of(context).sent_to_ethereum
-                                        : displayName,
+                                        ? I18n.of(context)
+                                            .received_from_ethereum
+                                        : isSendingToForeign
+                                            ? I18n.of(context).sent_to_ethereum
+                                            : displayName,
                                     style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 15)),

@@ -1,11 +1,11 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:ethereum_address/ethereum_address.dart';
 import 'package:flutter/material.dart';
-import 'package:fusecash/models/plugins/fee_base.dart';
-import 'package:fusecash/models/pro/token.dart';
-import 'package:fusecash/screens/pro_mode/assets_list.dart';
-import 'package:fusecash/screens/send/send_amount.dart';
-import 'package:fusecash/screens/send/send_amount_arguments.dart';
+import 'package:ceu_do_mapia/models/plugins/fee_base.dart';
+import 'package:ceu_do_mapia/models/pro/token.dart';
+import 'package:ceu_do_mapia/screens/pro_mode/assets_list.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount.dart';
+import 'package:ceu_do_mapia/screens/send/send_amount_arguments.dart';
 
 bracodeScannerHandler(BuildContext context,
     {bool isProMode = false, Token daiToken, FeePlugin feePlugin}) async {
@@ -22,8 +22,10 @@ bracodeScannerHandler(BuildContext context,
               builder: (context) => SendAmountScreen(
                   pageArgs: SendAmountArguments(
                       feePlugin: feePlugin,
-                      avatar: NetworkImage(getTokenUrl(
-                          checksumEthereumAddress(daiToken.address))),
+                      avatar: isProMode
+                          ? NetworkImage(getTokenUrl(
+                              checksumEthereumAddress(daiToken.address)))
+                          : null,
                       erc20Token: isProMode ? daiToken : null,
                       sendType: isProMode
                           ? SendType.ETHEREUM_ADDRESS
