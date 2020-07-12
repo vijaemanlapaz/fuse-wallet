@@ -24,31 +24,47 @@ class SettingsScreen extends StatelessWidget {
   }
 
   List<Widget> menuItem(context, DrawerViewModel viewModel) {
-    if (isFork()) {
-      return [
-        getListTile(context, I18n.of(context).about, () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => AboutScreen()));
-        }),
-      ];
-    } else {
-      return [
-        getListTile(context, I18n.of(context).about, () {
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => AboutScreen()));
-        }),
-        new Divider(),
-        // getListTile(context, I18n.of(context).protect_wallet, () {}),
-        // new Divider(),
-        new LanguageSelector(),
-        new Divider(),
-        getListTile(context, I18n.of(context).logout, () {
-          viewModel.logout();
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => SplashScreen()));
-        })
-      ];
-    }
+    return [
+      getListTile(context, I18n.of(context).about, () {
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => AboutScreen()));
+      }),
+      new Divider(),
+      // getListTile(context, I18n.of(context).protect_wallet, () {}),
+      // new Divider(),
+      // new LanguageSelector(),
+      // new Divider(),
+      getListTile(context, I18n.of(context).logout, () {
+        viewModel.logout();
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => SplashScreen()));
+      })
+    ];
+    // if (isFork()) {
+    //   return [
+    //     getListTile(context, I18n.of(context).about, () {
+    //       Navigator.push(context,
+    //           new MaterialPageRoute(builder: (context) => AboutScreen()));
+    //     }),
+    //   ];
+    // } else {
+    //   return [
+    //     getListTile(context, I18n.of(context).about, () {
+    //       Navigator.push(context,
+    //           new MaterialPageRoute(builder: (context) => AboutScreen()));
+    //     }),
+    //     new Divider(),
+    //     // getListTile(context, I18n.of(context).protect_wallet, () {}),
+    //     // new Divider(),
+    //     new LanguageSelector(),
+    //     new Divider(),
+    //     getListTile(context, I18n.of(context).logout, () {
+    //       viewModel.logout();
+    //       Navigator.push(context,
+    //           new MaterialPageRoute(builder: (context) => SplashScreen()));
+    //     })
+    //   ];
+    // }
   }
 
   Widget build(BuildContext context) {
