@@ -250,6 +250,8 @@ class I18n implements WidgetsLocalizations {
   String get copied_to_clipboard => "Copied to Clipboard";
   /// "More details"
   String get more_details => "More details";
+  /// "Convert"
+  String get convert => "Convert";
 }
 
 class _I18n_en_US extends I18n {

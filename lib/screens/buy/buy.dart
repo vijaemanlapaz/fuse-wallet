@@ -83,24 +83,34 @@ class BusinessesListView extends StatelessWidget {
         : Container();
   }
 
-  Widget businessList(BuyViewModel vm) {
-    return new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          new Expanded(
-              child: new Padding(
-                  padding: new EdgeInsets.only(left: 10, bottom: 5.0),
-                  child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) =>
-                        new Divider(),
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemCount: vm.businesses?.length ?? 0,
-                    itemBuilder: (context, index) => businessTile(context,
-                        vm.businesses[index], vm.communityAddres, vm.token),
-                  )))
-        ]);
+  Widget businessList(context, BuyViewModel vm) {
+    return vm.businesses.isEmpty
+        ? Container(
+            padding: const EdgeInsets.all(40.0),
+            child: Center(
+              child: Text(I18n.of(context).no_businesses),
+            ),
+          )
+        : new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+                new Expanded(
+                    child: new Padding(
+                        padding: new EdgeInsets.only(left: 10, bottom: 5.0),
+                        child: ListView.separated(
+                          separatorBuilder: (BuildContext context, int index) =>
+                              new Divider(),
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          itemCount: vm.businesses?.length ?? 0,
+                          itemBuilder: (context, index) => businessTile(
+                              context,
+                              vm.businesses[index],
+                              vm.communityAddres,
+                              vm.token),
+                        )))
+              ]);
   }
 
   ListTile businessTile(
@@ -185,20 +195,16 @@ class BusinessesListView extends StatelessWidget {
           vm.loadBusinesses();
         },
         builder: (_, vm) {
-          return vm.businesses.isEmpty
-              ? Container(
-                  padding: const EdgeInsets.all(40.0),
-                  child: Center(
-                    child: Text(I18n.of(context).no_businesses),
-                  ),
-                )
-              : new Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[banner(context, vm), businessList(vm)],
-                  ),
-                );
+          return new Container(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                banner(context, vm),
+                businessList(context, vm)
+              ],
+            ),
+          );
         });
   }
 }
