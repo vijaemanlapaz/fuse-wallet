@@ -7,7 +7,6 @@ import 'package:seedbed/models/app_state.dart';
 import 'package:seedbed/models/views/drawer.dart';
 import 'package:seedbed/screens/misc/about.dart';
 import 'package:seedbed/screens/splash/splash.dart';
-import 'package:seedbed/utils/forks.dart';
 import 'package:seedbed/widgets/language_selector.dart';
 import 'package:seedbed/widgets/main_scaffold.dart';
 
