@@ -25,12 +25,12 @@ class _ChangeRewardScreenState extends State<ChangeRewardScreen> {
         converter: _ChangeRewardViewModel.fromStore,
         builder: (_, viewModel) {
           String currentReward = formatValue(viewModel.currentReward, 18);
-          String next = formatValue(viewModel.nextReward, 18);
+          String next = formatValue(viewModel.nextReward, 18) + '%';
           final List<InlineSpan> spans =
               SpanBuilder('''The reward rate will be changed per
 your request in the beginning of the
 upcoming week on the 10.5.20
-to reward rate of $next%''')
+to reward rate of $next''')
                   .apply(TextSpan(
                       text: "10.5.20",
                       style: TextStyle(
@@ -221,8 +221,9 @@ class _ChangeRewardViewModel extends Equatable {
   _ChangeRewardViewModel({this.nextReward, this.currentReward, this.setReward});
   static _ChangeRewardViewModel fromStore(Store<AppState> store) {
     return _ChangeRewardViewModel(
-        currentReward: store.state.cashWalletState.currentReward,
-        nextReward: store.state.cashWalletState.nextReward,
+        currentReward:
+            store.state.cashWalletState?.currentReward ?? BigInt.zero,
+        nextReward: store.state.cashWalletState?.nextReward ?? BigInt.zero,
         setReward: (
           BigInt nom,
           BigInt dnom,
