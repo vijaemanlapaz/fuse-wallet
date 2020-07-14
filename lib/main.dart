@@ -126,6 +126,7 @@ class _MyAppState extends State<MyApp> {
                     : widget.initialRoute,
                 navigatorKey:
                     isProMode ? ProRouter.navigator.key : Router.navigator.key,
+                locale: Locale('br', 'BR'),
                 onGenerateRoute: isProMode
                     ? ProRouter.onGenerateRoute
                     : Router.onGenerateRoute,

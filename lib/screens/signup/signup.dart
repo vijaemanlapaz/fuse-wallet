@@ -23,7 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final phoneController = TextEditingController(text: "");
   final _formKey = GlobalKey<FormState>();
   bool isvalidPhone = true;
-  CountryCode countryCode = new CountryCode(dialCode: '‎+1');
+  CountryCode countryCode = new CountryCode(dialCode: '+‎‎55', code: 'BR');
 
   @override
   void initState() {
