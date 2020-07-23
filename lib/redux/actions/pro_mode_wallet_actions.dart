@@ -132,42 +132,42 @@ ThunkAction getAddressBalances() {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
-      String walletAddress = store.state.userState.walletAddress;
-      dynamic response = await tokenAPI.getAddressBalances(walletAddress);
-      List tokensList = List.from(response['tokens']);
-      if (tokensList.isNotEmpty) {
-        logger.info('found ${tokensList.length} tokens');
-        ProWalletState proWalletState = store.state.proWalletState;
-        List filterNewToken = tokensList.where((token) {
-          String tokenAddress = (token['address'] as String).toLowerCase();
-          if (proWalletState.erc20Tokens.containsKey(tokenAddress)) {
-            return token['timestamp'] > proWalletState.erc20Tokens[tokenAddress].timestamp;
-          }
-          return true;
-        }).toList();
-        logger.info('new token ${filterNewToken.length} tokens');
-        Iterable<MapEntry<String, Token>> entries = filterNewToken.map((token) {
-          String tokenAddress = token['address'].toLowerCase();
-          Token newToken = proWalletState.erc20Tokens[tokenAddress] ?? new Token.initial();
-          return new MapEntry(
-              tokenAddress,
-              newToken.copyWith(
-                address: tokenAddress,
-                name: token['name'],
-                amount: token['amount'],
-                decimals: token['decimals'],
-                symbol: token['symbol'],
-                timestamp: token['timestamp'],
-              ));
-        });
-        if (entries.isNotEmpty) {
-          Map<String, Token> erc20RTokens = new Map<String, Token>();
-          erc20RTokens.addEntries(entries);
-          store.dispatch(new GetTokenListSuccess(erc20Tokens: erc20RTokens));
-        }
-        store.dispatch(startFetchTransferEventsCall());
-        store.dispatch(startProcessingTokensJobsCall());
-      }
+      // String walletAddress = store.state.userState.walletAddress;
+      // dynamic response = await tokenAPI.getAddressBalances(walletAddress);
+      // List tokensList = List.from(response['tokens']);
+      // if (tokensList.isNotEmpty) {
+      //   logger.info('found ${tokensList.length} tokens');
+      //   ProWalletState proWalletState = store.state.proWalletState;
+      //   List filterNewToken = tokensList.where((token) {
+      //     String tokenAddress = (token['address'] as String).toLowerCase();
+      //     if (proWalletState.erc20Tokens.containsKey(tokenAddress)) {
+      //       return token['timestamp'] > proWalletState.erc20Tokens[tokenAddress].timestamp;
+      //     }
+      //     return true;
+      //   }).toList();
+      //   logger.info('new token ${filterNewToken.length} tokens');
+      //   Iterable<MapEntry<String, Token>> entries = filterNewToken.map((token) {
+      //     String tokenAddress = token['address'].toLowerCase();
+      //     Token newToken = proWalletState.erc20Tokens[tokenAddress] ?? new Token.initial();
+      //     return new MapEntry(
+      //         tokenAddress,
+      //         newToken.copyWith(
+      //           address: tokenAddress,
+      //           name: token['name'],
+      //           amount: token['amount'],
+      //           decimals: token['decimals'],
+      //           symbol: token['symbol'],
+      //           timestamp: token['timestamp'],
+      //         ));
+      //   });
+      //   if (entries.isNotEmpty) {
+      //     Map<String, Token> erc20RTokens = new Map<String, Token>();
+      //     erc20RTokens.addEntries(entries);
+      //     store.dispatch(new GetTokenListSuccess(erc20Tokens: erc20RTokens));
+      //   }
+      //   store.dispatch(startFetchTransferEventsCall());
+      //   store.dispatch(startProcessingTokensJobsCall());
+      // }
     } catch (error) {
       logger.severe('Error in Get Address Balances');
     }

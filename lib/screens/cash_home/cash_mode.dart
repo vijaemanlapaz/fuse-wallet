@@ -10,7 +10,10 @@ import 'package:seedbed/screens/cash_home/cash_home.dart';
 import 'package:seedbed/screens/cash_home/webview_page.dart';
 import 'package:seedbed/screens/send/contacts_list.dart';
 import 'package:seedbed/screens/send/receive.dart';
+import 'package:seedbed/screens/send/send_amount.dart';
+import 'package:seedbed/screens/send/send_amount_arguments.dart';
 import 'package:seedbed/screens/send/send_contact.dart';
+import 'package:seedbed/utils/addresses.dart';
 import 'package:seedbed/widgets/bottom_bar_item.dart';
 import 'package:seedbed/widgets/drawer.dart';
 import 'package:seedbed/widgets/my_app_bar.dart';
@@ -34,24 +37,20 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
 
   List<Widget> _pages(List<Contact> contacts, String webUrl) {
     bool hasContactsInStore = contacts.isNotEmpty;
-    if (webUrl != null && webUrl.isNotEmpty) {
-      return [
-        CashHomeScreen(),
-        !hasContactsInStore ? SendToContactScreen() : ContactsList(),
-        WebViewPage(
-          pageArgs: WebViewPageArguments(
-              url: webUrl, withBack: false, title: 'Community webpage'),
-        ),
-        ReceiveScreen()
-      ];
-    } else {
-      return [
-        CashHomeScreen(),
-        !hasContactsInStore ? SendToContactScreen() : ContactsList(),
-        BuyScreen(),
-        ReceiveScreen()
-      ];
-    }
+    return [
+      CashHomeScreen(),
+      !hasContactsInStore ? SendToContactScreen() : ContactsList(),
+      SendAmountScreen(
+          pageArgs: SendAmountArguments(
+        sendType: SendType.BUSINESS,
+        isConvert: true,
+        accountAddress: reserveContractAddress,
+        avatar: NetworkImage(
+            'https://cdn3.iconfinder.com/data/icons/abstract-1/512/no_image-512.png'),
+        name: 'Convetor',
+      )),
+      ReceiveScreen()
+    ];
   }
 
   void _onTap(int itemIndex) {

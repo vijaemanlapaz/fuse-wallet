@@ -422,7 +422,7 @@ ThunkAction initWeb3Call(
               DotEnv().env['DAI_POINTS_MANAGER_CONTRACT_ADDRESS'],
           marketMakerContractAddress:
               DotEnv().env['MARKET_MAKER_CONTRACT_ADDRESS'],
-          reserveContractAddress: DotEnv().env['RESERVE_CONTRACT_ADDRESS']);
+          reserveContractAddress: reserveContractAddress);
       if (store.state.cashWalletState.communityAddress == null ||
           store.state.cashWalletState.communityAddress.isEmpty) {
         store.dispatch(
@@ -759,8 +759,8 @@ ThunkAction inviteAndSendCall(
     final logger = await AppFactory().getLogger('action');
     try {
       String senderName = store.state.userState.displayName;
-      dynamic response = await api.invite(
-          contactPhoneNumber, store.state.cashWalletState.communityAddress,
+      dynamic response = await api.invite(contactPhoneNumber,
+          communityAddress: store.state.cashWalletState.communityAddress,
           name: senderName,
           amount: tokensAmount.toString(),
           symbol: token.symbol);
@@ -1135,8 +1135,8 @@ ThunkAction setMintedReward(
       logger.info('nom, nom nom nom nom ${nom.toString()}');
       logger.info('dnom dnom dnom dnom dnom  ${dnom.toString()}');
       dynamic data = await web3.setMintedReward([nom, dnom]);
-      dynamic response = await api.callContract(web3, walletAddress,
-          DotEnv().env['RESERVE_CONTRACT_ADDRESS'], 0, data);
+      dynamic response = await api.callContract(
+          web3, walletAddress, reserveContractAddress, 0, data);
       dynamic jobId = response['job']['_id'];
       sendSuccessCallback();
       logger.info('Job $jobId for calling setWeeklyReward');
@@ -1364,9 +1364,9 @@ ThunkAction getTokenTransfersListCall(String tokenAddress) {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
-      wallet_core.Web3 web3 = store.state.cashWalletState.web3;
       bool isLoading = store.state.cashWalletState.isCommunityLoading ?? false;
       if (isLoading) return;
+      wallet_core.Web3 web3 = store.state.cashWalletState.web3;
       if (web3 == null) {
         throw "Web3 is empty";
       }
@@ -1446,6 +1446,44 @@ ThunkAction sendTokenToContactCall(
           token: token));
     } catch (e) {
       logger.severe('ERROR - sendTokenToContactCall $e');
+      store.dispatch(new ErrorAction('Could not send token to contact'));
+    }
+  };
+}
+
+ThunkAction buyTokenAction(String tokenToApprove, num tokensAmount) {
+  return (Store store) async {
+    final logger = await AppFactory().getLogger('action');
+    try {
+      wallet_core.Web3 web3 = store.state.cashWalletState.web3;
+      String walletAddress = store.state.cashWalletState.walletAddress;
+      if (web3 == null) {
+        throw "Web3 is empty";
+      }
+      dynamic response = await api.buyToken(web3, tokenToApprove, walletAddress, tokensAmount);
+      dynamic jobId = response['job']['_id'];
+      logger.info('buyTokenAction $jobId');
+    } catch (e) {
+      logger.severe('ERROR - buyTokenAction $e');
+      store.dispatch(new ErrorAction('Could not send token to contact'));
+    }
+  };
+}
+
+ThunkAction sellTokenAction(String tokenToApprove, num tokensAmount) {
+  return (Store store) async {
+    final logger = await AppFactory().getLogger('action');
+    try {
+      wallet_core.Web3 web3 = store.state.cashWalletState.web3;
+      String walletAddress = store.state.cashWalletState.walletAddress;
+      if (web3 == null) {
+        throw "Web3 is empty";
+      }
+      dynamic response = await api.sellToken(web3, tokenToApprove, walletAddress, tokensAmount);
+      dynamic jobId = response['job']['_id'];
+      logger.info('sellTokenAction $jobId');
+    } catch (e) {
+      logger.severe('ERROR - sellTokenAction $e');
       store.dispatch(new ErrorAction('Could not send token to contact'));
     }
   };

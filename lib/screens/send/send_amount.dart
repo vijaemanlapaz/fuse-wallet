@@ -35,6 +35,7 @@ class _SendAmountScreenState extends State<SendAmountScreen>
 
   List<DropdownMenuItem<dynamic>> buildDropdownMenuItems(List<Token> options) {
     return options.map((Token token) {
+      print('${token.name} ${token.address}');
       return DropdownMenuItem(
         value: token,
         child: Container(
@@ -311,7 +312,7 @@ class _SendAmountScreenState extends State<SendAmountScreen>
               child: PrimaryButton(
                 labelFontWeight: FontWeight.normal,
                 label: I18n.of(context).continue_with +
-                    ' $amountText ${hasSecondToken ? dropdownValue.symbol : viewModel.token.symbol}',
+                    ' $amountText ${hasSecondToken ? (dropdownValue?.symbol ?? '') : (viewModel?.token?.symbol ?? '')}',
                 onPressed: () {
                   if (hasSecondToken) {
                     args.tokenToSend = dropdownValue;

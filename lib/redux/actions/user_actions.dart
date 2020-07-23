@@ -181,7 +181,7 @@ ThunkAction backupWalletCall(VoidCallback successCb) {
     String communityAddres = store.state.cashWalletState.communityAddress;
     store.dispatch(BackupRequest());
     try {
-      dynamic response = await api.backupWallet(communityAddres);
+      dynamic response = await api.backupWallet(communityAddress: communityAddres);
       Community community = store.state.cashWalletState.communities[communityAddres];
       if (community.plugins.backupBonus != null && community.plugins.backupBonus.isActive) {
         BigInt value = toBigInt(community.plugins.backupBonus.amount, community.token.decimals);

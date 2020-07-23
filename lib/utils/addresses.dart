@@ -4,6 +4,8 @@ String foreignNetwork = DotEnv().env['MODE'] == 'production' ? 'mainnet' : 'rops
 
 String zeroAddress = "0x0000000000000000000000000000000000000000";
 
+final String reserveContractAddress = DotEnv().env['RESERVE_CONTRACT_ADDRESS'];
+
 String defaultCommunityAddress = DotEnv().env['DEFAULT_COMMUNITY_CONTRACT_ADDRESS'].toLowerCase();
 
 final String daiTokenAddress = DotEnv().env['DAI_TOKEN'].toLowerCase();

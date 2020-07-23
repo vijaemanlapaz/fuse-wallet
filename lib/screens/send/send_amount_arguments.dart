@@ -24,10 +24,12 @@ class SendAmountArguments {
   Token erc20Token;
   token.Token tokenToSend;
   FeePlugin feePlugin;
+  final bool isConvert;
 
   SendAmountArguments(
       {this.sendToCashMode = false,
       this.sendType,
+      this.isConvert = false,
       this.isProMode = false,
       this.name,
       this.phoneNumber,

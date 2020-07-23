@@ -52,31 +52,48 @@ class _SendReviewScreenState extends State<SendReviewScreen>
       String transferNote,
       VoidCallback sendSuccessCallback,
       VoidCallback sendFailureCallback) {
-    if (viewModel.isProMode) {
-      if (args.sendToCashMode) {
-        viewModel.sendToCashMode(
-            args.amount, sendSuccessCallback, sendFailureCallback);
+    if (args.isConvert) {
+      if (args.tokenToSend.address ==
+          '0x8a5dded52b6e6ae3aa14555c8c931fc41d177fd6') {
+        viewModel.buyToken(args.tokenToSend.address, args.amount);
       } else {
-        viewModel.sendToErc20Token(args.erc20Token, args.accountAddress,
-            args.amount, sendSuccessCallback, sendFailureCallback);
+        viewModel.sellToken(args.tokenToSend.address, args.amount);
       }
     } else {
-      if (args.accountAddress == null ||
-          args.accountAddress == '' && args.phoneNumber != null) {
-        viewModel.sendToContact(
-          args.name,
-          args.phoneNumber,
-          args.amount,
-          args.name,
-          transferNote,
-          sendSuccessCallback,
-          sendFailureCallback,
-          token: args.tokenToSend == null ? viewModel.token : args.tokenToSend,
-        );
+      if (viewModel.isProMode) {
+        if (args.sendToCashMode) {
+          viewModel.sendToCashMode(
+              args.amount, sendSuccessCallback, sendFailureCallback);
+        } else {
+          viewModel.sendToErc20Token(args.erc20Token, args.accountAddress,
+              args.amount, sendSuccessCallback, sendFailureCallback);
+        }
       } else {
-        viewModel.sendToAccountAddress(args.accountAddress, args.amount,
-            args.name, transferNote, sendSuccessCallback, sendFailureCallback,
-            token: args.tokenToSend == null ? viewModel.token : args.tokenToSend,);
+        if (args.accountAddress == null ||
+            args.accountAddress == '' && args.phoneNumber != null) {
+          viewModel.sendToContact(
+            args.name,
+            args.phoneNumber,
+            args.amount,
+            args.name,
+            transferNote,
+            sendSuccessCallback,
+            sendFailureCallback,
+            token:
+                args.tokenToSend == null ? viewModel.token : args.tokenToSend,
+          );
+        } else {
+          viewModel.sendToAccountAddress(
+            args.accountAddress,
+            args.amount,
+            args.name,
+            transferNote,
+            sendSuccessCallback,
+            sendFailureCallback,
+            token:
+                args.tokenToSend == null ? viewModel.token : args.tokenToSend,
+          );
+        }
       }
     }
   }
@@ -128,7 +145,10 @@ class _SendReviewScreenState extends State<SendReviewScreen>
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 50,
                                 fontWeight: FontWeight.w900)),
-                        Text(args.tokenToSend != null ? args.tokenToSend.symbol : viewModel.token.symbol,
+                        Text(
+                            args.tokenToSend != null
+                                ? args.tokenToSend.symbol
+                                : viewModel.token.symbol,
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 30,

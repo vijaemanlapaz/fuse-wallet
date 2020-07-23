@@ -22,6 +22,8 @@ class SendAmountViewModel extends Equatable {
   final Function(Map<String, dynamic> traits) idenyifyCall;
   final Function(num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) sendToCashMode;
   final Function(erc20Token.Token token, String recieverAddress, num amount, VoidCallback, VoidCallback, {String receiverName, String transferNote, }) sendToErc20Token;
+  final Function(String tokenAddress, num tokensAmount) buyToken;
+  final Function(String tokenAddress, num tokensAmount) sellToken;
 
   @override
   List<Object> get props =>
@@ -30,6 +32,8 @@ class SendAmountViewModel extends Equatable {
   SendAmountViewModel(
       {this.token,
       this.balance,
+      this.buyToken,
+      this.sellToken,
       this.tokens,
       this.myCountryCode,
       this.sendToContact,
@@ -111,6 +115,12 @@ class SendAmountViewModel extends Equatable {
         },
         idenyifyCall: (Map<String, dynamic> traits) {
           store.dispatch(segmentIdentifyCall(traits));
+        },
+        sellToken: (String tokenAddress, num tokensAmount) {
+          store.dispatch(sellTokenAction(tokenAddress, tokensAmount));
+        },
+        buyToken: (String tokenAddress, num tokensAmount) {
+          store.dispatch(buyTokenAction(tokenAddress, tokensAmount));
         });
   }
 }
