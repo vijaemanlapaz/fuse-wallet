@@ -54,10 +54,20 @@ class _SendReviewScreenState extends State<SendReviewScreen>
       VoidCallback sendFailureCallback) {
     if (args.isConvert) {
       if (args.tokenToSend.address ==
-          '0x8a5dded52b6e6ae3aa14555c8c931fc41d177fd6') {
-        viewModel.buyToken(args.tokenToSend.address, args.amount);
+          viewModel.community.secondaryToken.address) {
+        viewModel.buyToken(
+            viewModel.community.secondaryToken.address,
+            args.tokenToSend.address,
+            args.amount,
+            sendSuccessCallback,
+            sendFailureCallback);
       } else {
-        viewModel.sellToken(args.tokenToSend.address, args.amount);
+        viewModel.sellToken(
+            viewModel.community.secondaryToken.address,
+            args.tokenToSend.address,
+            args.amount,
+            sendSuccessCallback,
+            sendFailureCallback);
       }
     } else {
       if (viewModel.isProMode) {

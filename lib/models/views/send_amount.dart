@@ -22,8 +22,8 @@ class SendAmountViewModel extends Equatable {
   final Function(Map<String, dynamic> traits) idenyifyCall;
   final Function(num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) sendToCashMode;
   final Function(erc20Token.Token token, String recieverAddress, num amount, VoidCallback, VoidCallback, {String receiverName, String transferNote, }) sendToErc20Token;
-  final Function(String tokenAddress, num tokensAmount) buyToken;
-  final Function(String tokenAddress, num tokensAmount) sellToken;
+  final Function(String daiTokenAddress, String tokenAddress, num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) buyToken;
+  final Function(String daiTokenAddress, String tokenAddress, num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) sellToken;
 
   @override
   List<Object> get props =>
@@ -116,11 +116,11 @@ class SendAmountViewModel extends Equatable {
         idenyifyCall: (Map<String, dynamic> traits) {
           store.dispatch(segmentIdentifyCall(traits));
         },
-        sellToken: (String tokenAddress, num tokensAmount) {
-          store.dispatch(sellTokenAction(tokenAddress, tokensAmount));
+        sellToken: (String daiTokenAddress, String tokenAddress, num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) {
+          store.dispatch(sellTokenAction(daiTokenAddress, tokenAddress, tokensAmount, sendSuccessCallback, sendFailureCallback));
         },
-        buyToken: (String tokenAddress, num tokensAmount) {
-          store.dispatch(buyTokenAction(tokenAddress, tokensAmount));
+        buyToken: (String daiTokenAddress, String tokenAddress, num tokensAmount, VoidCallback sendSuccessCallback, VoidCallback sendFailureCallback) {
+          store.dispatch(buyTokenAction(daiTokenAddress, tokenAddress, tokensAmount, sendSuccessCallback, sendFailureCallback));
         });
   }
 }
