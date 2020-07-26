@@ -1146,8 +1146,15 @@ ThunkAction switchToNewCommunityCall(String communityAddress) {
           communityAddress,
           isRopsten: isRopsten,
           walletAddress: walletAddress);
+      Map<String, dynamic> secondaryCommunityData;
+      if (secondryCommunityAddress != null) {
+        secondaryCommunityData = await api.getCommunityData(
+            secondryCommunityAddress,
+            isRopsten: isRopsten,
+            walletAddress: walletAddress);
+      }
       store.dispatch(fetchCommunityMetadataCall(communityData['communityURI']));
-      Plugins communityPlugins = Plugins.fromJson(communityData['plugins']);
+      Plugins communityPlugins = Plugins.fromJson(secondaryCommunityData['plugins'] ?? communityData['plugins']);
       store.dispatch(joinCommunityCall(community: community, token: token));
       store.dispatch(getBusinessListCall());
       String homeBridgeAddress = communityData['homeBridgeAddress'];
@@ -1205,8 +1212,15 @@ ThunkAction switchToExisitingCommunityCall(String communityAddress) {
           communityAddress,
           isRopsten: isRopsten,
           walletAddress: walletAddress);
+      Map<String, dynamic> secondaryCommunityData;
+      if (secondryCommunityAddress != null) {
+        secondaryCommunityData = await api.getCommunityData(
+            secondryCommunityAddress,
+            isRopsten: isRopsten,
+            walletAddress: walletAddress);
+      }
       store.dispatch(fetchCommunityMetadataCall(communityData['communityURI']));
-      Plugins communityPlugins = Plugins.fromJson(communityData['plugins']);
+      Plugins communityPlugins = Plugins.fromJson(secondaryCommunityData['plugins'] ?? communityData['plugins']);
       store.dispatch(getBusinessListCall());
       String homeBridgeAddress = communityData['homeBridgeAddress'];
       String foreignBridgeAddress = communityData['foreignBridgeAddress'];

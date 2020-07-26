@@ -93,7 +93,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             context,
             MaterialPageRoute(
                 builder: (context) => WebViewPage(
-                    pageArgs: WebViewPageArguments(url: url, title: 'Top up')),
+                    pageArgs: WebViewPageArguments(
+                        url: url, title: I18n.of(context).top_up)),
                 fullscreenDialog: true),
           );
           Segment.track(eventName: 'User clicked on top up');

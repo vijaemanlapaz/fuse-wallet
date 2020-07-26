@@ -208,8 +208,8 @@ class I18n implements WidgetsLocalizations {
   String get protect_wallet => "Protect your wallet";
   /// "Backup"
   String get backup_wallet => "Backup";
-  /// "Top-up your account"
-  String get top_up => "Top-up your account";
+  /// "Buy with credit Card"
+  String get top_up => "Buy with credit Card";
   /// "Buy"
   String get buy => "Buy";
   /// "DAI points"

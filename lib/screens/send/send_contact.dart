@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_segment/flutter_segment.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:seedbed/generated/i18n.dart';
 import 'package:seedbed/models/app_state.dart';
 import 'package:seedbed/models/views/contacts.dart';
+import 'package:seedbed/screens/send/contact_tile.dart';
 import 'package:seedbed/screens/send/recent_contacts.dart';
 import 'package:seedbed/utils/barcode.dart';
 import 'package:seedbed/screens/send/enable_contacts.dart';
-import 'package:seedbed/screens/send/send_amount.dart';
-import 'package:seedbed/screens/send/send_amount_arguments.dart';
 import 'package:seedbed/utils/contacts.dart';
 import 'package:seedbed/utils/format.dart';
 import 'package:seedbed/utils/send.dart';
@@ -114,116 +112,20 @@ class _SendToContactScreenState extends State<SendToContactScreen> {
     );
   }
 
-  listBody(ContactsViewModel viewModel, List<Contact> group) {
-    List<Widget> listItems = List();
-
-    for (Contact user in group) {
-      for (Item phone in user.phones.toList()) {
-        dynamic component = Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          child: Container(
-            decoration: new BoxDecoration(
-                border:
-                    Border(bottom: BorderSide(color: const Color(0xFFDCDCDC)))),
-            child: ListTile(
-              contentPadding:
-                  EdgeInsets.only(top: 5, bottom: 5, left: 16, right: 16),
-              leading: CircleAvatar(
-                backgroundColor: Color(0xFFE0E0E0),
-                radius: 25,
-                backgroundImage: user.avatar != null && user.avatar.isNotEmpty
-                    ? MemoryImage(user.avatar)
-                    : new AssetImage('assets/images/anom.png'),
-              ),
-              title: Text(
-                user.displayName,
-                style: TextStyle(
-                    fontSize: 15, color: Theme.of(context).primaryColor),
-              ),
-              subtitle: Text(
-                phone.value,
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              onTap: () {
-                sendToContact(context, viewModel, user.displayName, phone.value,
-                    avatar: user.avatar != null && user.avatar.isNotEmpty
-                      ? MemoryImage(user.avatar)
-                      : new AssetImage('assets/images/anom.png'));
-              },
-            ),
-          ),
-        );
-        listItems.add(component);
-      }
-    }
-    return SliverList(
-      delegate: SliverChildListDelegate(listItems),
-    );
-  }
-
   Widget sendToAcccountAddress(String accountAddress, viewModel) {
-    Widget component = Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      actionExtentRatio: 0.25,
-      child: Container(
-        decoration: new BoxDecoration(
-            border: Border(bottom: BorderSide(color: const Color(0xFFDCDCDC)))),
-        child: ListTile(
-          contentPadding:
-              EdgeInsets.only(top: 5, bottom: 5, left: 16, right: 16),
-          leading: CircleAvatar(
-            backgroundColor: Color(0xFFE0E0E0),
-            radius: 25,
-            backgroundImage: new AssetImage('assets/images/anom.png'),
-          ),
-          title: Text(
-            formatAddress(accountAddress),
-            style: TextStyle(fontSize: 16),
-          ),
-          trailing: InkWell(
-            child: Text(
-              I18n.of(context).next_button,
-              style: TextStyle(color: Color(0xFF0377FF)),
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => SendAmountScreen(
-                          pageArgs: SendAmountArguments(
-                              erc20Token: viewModel.isProMode
-                                  ? viewModel.daiToken
-                                  : null,
-                              sendType: viewModel.isProMode
-                                  ? SendType.ETHEREUM_ADDRESS
-                                  : SendType.PASTED_ADDRESS,
-                              accountAddress: accountAddress,
-                              name: formatAddress(accountAddress),
-                              avatar:
-                                  new AssetImage('assets/images/anom.png')))));
-            },
-          ),
-          onTap: () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => SendAmountScreen(
-                          pageArgs: SendAmountArguments(
-                              erc20Token: viewModel.isProMode
-                                  ? viewModel.daiToken
-                                  : null,
-                              sendType: viewModel.isProMode
-                                  ? SendType.ETHEREUM_ADDRESS
-                                  : SendType.PASTED_ADDRESS,
-                              accountAddress: accountAddress,
-                              name: formatAddress(accountAddress),
-                              avatar:
-                                  new AssetImage('assets/images/anom.png')))));
-            },
+    Widget component = ContactTile(
+      displayName: formatAddress(accountAddress),
+      onTap: () {
+        sendToPastedAddress(context, viewModel, accountAddress);
+      },
+      trailing: InkWell(
+        child: Text(
+          I18n.of(context).next_button,
+          style: TextStyle(color: Color(0xFF0377FF)),
         ),
+        onTap: () {
+          sendToPastedAddress(context, viewModel, accountAddress);
+        },
       ),
     );
     return SliverList(
@@ -242,23 +144,6 @@ class _SendToContactScreenState extends State<SendToContactScreen> {
       }
     } else if (isValidEthereumAddress(searchController.text)) {
       listItems.add(sendToAcccountAddress(searchController.text, viewModel));
-    }
-
-    Map<String, List<Contact>> groups = new Map<String, List<Contact>>();
-    for (Contact c in filteredUsers) {
-      String groupName = c.displayName[0];
-      if (!groups.containsKey(groupName)) {
-        groups[groupName] = new List<Contact>();
-      }
-      groups[groupName].add(c);
-    }
-
-    List<String> titles = groups.keys.toList()..sort();
-
-    for (String title in titles) {
-      List<Contact> group = groups[title];
-      listItems.add(listHeader(title));
-      listItems.add(listBody(viewModel, group));
     }
 
     return listItems;

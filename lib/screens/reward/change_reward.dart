@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:seedbed/redux/actions/cash_wallet_actions.dart';
 import 'package:seedbed/screens/routes.gr.dart';
 import 'package:seedbed/utils/format.dart';
@@ -55,56 +56,73 @@ to reward rate of $next''')
           return Scaffold(
               appBar: MyAppBar(
                 height: 230.0,
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  alignment: Alignment.bottomLeft,
-                  padding: EdgeInsets.only(
-                      top: 20.0, left: 20.0, right: 20.0, bottom: 40),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).primaryColor.withAlpha(20),
-                          blurRadius: 30.0,
-                          spreadRadius: 0.0,
-                          offset: Offset(
-                            0.0,
-                            3.0,
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      alignment: Alignment.bottomLeft,
+                      padding: EdgeInsets.only(
+                          top: 20.0, left: 20.0, right: 20.0, bottom: 40),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Theme.of(context).primaryColor.withAlpha(20),
+                              blurRadius: 30.0,
+                              spreadRadius: 0.0,
+                              offset: Offset(
+                                0.0,
+                                3.0,
+                              ),
+                            )
+                          ],
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Theme.of(context).primaryColorLight,
+                              Theme.of(context).primaryColorDark,
+                            ],
                           ),
-                        )
-                      ],
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Theme.of(context).primaryColorLight,
-                          Theme.of(context).primaryColorDark,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30.0),
+                              bottomRight: Radius.circular(30.0))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 30.0),
+                            child: new RichText(
+                              text: TextSpan(
+                                  children: current,
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    letterSpacing: .5,
+                                  )),
+                            ),
+                          ),
+                          RichText(
+                              text: TextSpan(
+                                  children: spans,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Color(0xFFC6C6C6))))
                         ],
                       ),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30.0),
-                          bottomRight: Radius.circular(30.0))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 30.0),
-                        child: new RichText(
-                          text: TextSpan(
-                              children: current,
-                              style: TextStyle(
-                                fontSize: 25,
-                                letterSpacing: .5,
-                              )),
-                        ),
-                      ),
-                      RichText(
-                          text: TextSpan(
-                              children: spans,
-                              style: TextStyle(
-                                  fontSize: 18, color: Color(0xFFC6C6C6))))
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                        top: 45,
+                        left: 20,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/arrow.svg',
+                            color: Theme.of(context).splashColor,
+                          ),
+                        ))
+                  ],
                 ),
               ),
               body: Container(

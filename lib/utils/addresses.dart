@@ -8,6 +8,8 @@ final String reserveContractAddress = DotEnv().env['RESERVE_CONTRACT_ADDRESS'];
 
 String defaultCommunityAddress = DotEnv().env['DEFAULT_COMMUNITY_CONTRACT_ADDRESS'].toLowerCase();
 
+String secondryCommunityAddress = DotEnv().env['SECONDARY_COMMUNITY_CONTRACT_ADDRESS'];
+
 final String daiTokenAddress = DotEnv().env['DAI_TOKEN'].toLowerCase();
 
 Map<String, String> funderAddresses = {

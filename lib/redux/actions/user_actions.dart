@@ -304,9 +304,9 @@ ThunkAction syncContactsCall(List<Contact> contacts) {
   return (Store store) async {
     final logger = await AppFactory().getLogger('action');
     try {
-      store.dispatch(new SaveContacts(contacts));
+      store.dispatch(SaveContacts(contacts));
       List<String> syncedContacts = store.state.userState.syncedContacts;
-      List<String> newPhones = new List<String>();
+      List<String> newPhones = List<String>();
       String countryCode = store.state.userState.countryCode;
       String isoCode = store.state.userState.isoCode;
       for (Contact contact in contacts) {
@@ -335,7 +335,7 @@ ThunkAction syncContactsCall(List<Contact> contacts) {
       }
       if (newPhones.length == 0) {
         dynamic response = await api.syncContacts(newPhones);
-        store.dispatch(new SyncContactsProgress(newPhones,
+        store.dispatch(SyncContactsProgress(newPhones,
             List<Map<String, dynamic>>.from(response['newContacts'])));
         await api.ackSync(response['nonce']);
       } else {
@@ -343,7 +343,7 @@ ThunkAction syncContactsCall(List<Contact> contacts) {
         List<String> partial = newPhones.take(limit).toList();
         while (partial.length > 0) {
           dynamic response = await api.syncContacts(partial);
-          store.dispatch(new SyncContactsProgress(partial,
+          store.dispatch(SyncContactsProgress(partial,
               List<Map<String, dynamic>>.from(response['newContacts'])));
 
           await api.ackSync(response['nonce']);
