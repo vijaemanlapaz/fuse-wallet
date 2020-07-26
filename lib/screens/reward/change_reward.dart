@@ -24,7 +24,7 @@ class _ChangeRewardScreenState extends State<ChangeRewardScreen> {
     return StoreConnector<AppState, _ChangeRewardViewModel>(
         converter: _ChangeRewardViewModel.fromStore,
         builder: (_, viewModel) {
-          String currentReward = formatValue(viewModel.currentReward, 18);
+          String currentReward = formatValue(viewModel.currentReward, 18) + '%';
           String next = formatValue(viewModel.nextReward, 18) + '%';
           final List<InlineSpan> spans =
               SpanBuilder('''The reward rate will be changed per
@@ -46,7 +46,7 @@ to reward rate of $next''')
                   .build();
 
           final List<InlineSpan> current =
-              SpanBuilder('''Current reward rate - $currentReward''')
+              SpanBuilder('''Current reward rate: $currentReward''')
                   .apply(TextSpan(
                       text: currentReward,
                       style: TextStyle(fontWeight: FontWeight.bold)))
