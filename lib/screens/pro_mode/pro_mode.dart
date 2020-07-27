@@ -36,7 +36,7 @@ class _ProModeScaffoldState extends State<ProModeScaffold> {
     rateMyApp = RateMyApp(
       minDays: 0,
       minLaunches: 0,
-      googlePlayIdentifier: 'io.fuse.roost',
+      googlePlayIdentifier: 'com.roostnow.Roost',
       appStoreIdentifier: '1491783654',
     );
     rateMyApp.init().then((_) {
