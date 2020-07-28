@@ -25,15 +25,19 @@ class _ChangeRewardScreenState extends State<ChangeRewardScreen> {
     return StoreConnector<AppState, _ChangeRewardViewModel>(
         converter: _ChangeRewardViewModel.fromStore,
         builder: (_, viewModel) {
+          DateTime date = DateTime.now().add(Duration(
+              days: (DateTime.sunday - DateTime.now().weekday) %
+                  DateTime.daysPerWeek));
+          String nextSunday = '${date.year}-${date.month}-${date.day}';
           String currentReward = formatValue(viewModel.currentReward, 18) + '%';
           String next = formatValue(viewModel.nextReward, 18) + '%';
           final List<InlineSpan> spans =
               SpanBuilder('''The reward rate will be changed per
 your request in the beginning of the
-upcoming week on the 10.5.20
+upcoming week on the $nextSunday
 to reward rate of $next''')
                   .apply(TextSpan(
-                      text: "10.5.20",
+                      text: nextSunday,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,

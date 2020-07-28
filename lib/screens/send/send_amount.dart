@@ -43,19 +43,6 @@ class _SendAmountScreenState extends State<SendAmountScreen>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // CachedNetworkImage(
-              //   width: 25,
-              //   height: 25,
-              //   imageUrl: getIPFSImageUrl(community.metadata.image),
-              //   placeholder: (context, url) => CircularProgressIndicator(),
-              //   errorWidget: (context, url, error) => Image(
-              //     image: NetworkImage(
-              //       'https://cdn3.iconfinder.com/data/icons/abstract-1/512/no_image-512.png',
-              //     ),
-              //     width: 25,
-              //     height: 25,
-              //   ),
-              // ),
               SizedBox(
                 width: 5,
               ),
@@ -174,6 +161,20 @@ class _SendAmountScreenState extends State<SendAmountScreen>
           dropOptions = buildDropdownMenuItems(viewModel.tokens);
         }
 
+        final BigInt balance = dropdownValue == viewModel.tokens[0]
+            ? viewModel.balance
+            : viewModel.secondaryTokenBalance;
+        final int decimals = dropdownValue == viewModel.tokens[0]
+            ? viewModel.tokens[0].decimals
+            : viewModel.community.secondaryToken.decimals;
+        final num currentTokenBalance =
+            num.parse(formatValue(balance, decimals, withPrecision: true));
+        final bool hasFund = (num.tryParse(amountText ?? 0) ?? 0)
+                .compareTo(currentTokenBalance) <=
+            0;
+        if (!hasFund) {
+          controller.forward();
+        }
         String symbol = args.erc20Token != null
             ? args.erc20Token.symbol
             : viewModel.token.symbol;
@@ -182,12 +183,15 @@ class _SendAmountScreenState extends State<SendAmountScreen>
             title: title,
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height * 0.7,
+                // height: MediaQuery.of(context).size.height * 0.7,
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                      ),
                       Container(
                         child: Column(
                           children: <Widget>[
@@ -297,6 +301,9 @@ class _SendAmountScreenState extends State<SendAmountScreen>
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       VirtualKeyboard(
                           height: MediaQuery.of(context).size.height * 0.37,
                           fontSize: 28,
@@ -310,9 +317,21 @@ class _SendAmountScreenState extends State<SendAmountScreen>
                 child: SlideTransition(
               position: offset,
               child: PrimaryButton(
+                opacity: 1,
+                colors: !hasFund
+                    ? [
+                        Theme.of(context).bottomAppBarColor,
+                        Theme.of(context).bottomAppBarColor,
+                      ]
+                    : null,
+                labalColor: !hasFund
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).splashColor,
                 labelFontWeight: FontWeight.normal,
-                label: I18n.of(context).continue_with +
-                    ' $amountText ${hasSecondToken ? (dropdownValue?.symbol ?? '') : (viewModel?.token?.symbol ?? '')}',
+                label: hasFund
+                    ? I18n.of(context).continue_with +
+                        ' $amountText ${hasSecondToken ? (dropdownValue?.symbol ?? '') : (viewModel?.token?.symbol ?? '')}'
+                    : I18n.of(context).insufficient_fund,
                 onPressed: () {
                   if (hasSecondToken) {
                     args.tokenToSend = dropdownValue;

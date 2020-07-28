@@ -32,9 +32,9 @@ class TransactionListItem extends StatelessWidget {
         false;
     bool isWalletCreated = 'created' == this._vm.walletStatus;
     bool isZeroAddress = transfer.from == zeroAddress;
-    ImageProvider<dynamic> image = isZeroAddress ? AssetImage(
-      'assets/images/ethereume_icon.png',
-      ) : getTransferImage(transfer, _contact, _vm);
+    ImageProvider<dynamic> image = isZeroAddress
+        ? NetworkImage(_vm.community.metadata.getImageUri())
+        : getTransferImage(transfer, _contact, _vm);
     String displayName = transfer.isJoinBonus()
         ? (transfer.text ?? I18n.of(context).join_bonus)
         : (transfer.receiverName != null && transfer.receiverName != '')
@@ -45,11 +45,13 @@ class TransactionListItem extends StatelessWidget {
                     ? _contact.displayName
                     : deducePhoneNumber(transfer, _vm.reverseContacts,
                         businesses: _vm.businesses);
-    String symbol = _vm.token != null && _vm.token.address != null &&  transfer.tokenAddress != null
-      ? _vm.token.address == transfer.tokenAddress
-        ? _vm.token.symbol
-          : _vm.community.secondaryToken?.symbol
-          : '';
+    String symbol = _vm.token != null &&
+            _vm.token.address != null &&
+            transfer.tokenAddress != null
+        ? _vm.token.address.toLowerCase() == transfer.tokenAddress.toLowerCase()
+            ? _vm.token.symbol
+            : _vm.community.secondaryToken?.symbol
+        : '';
     List<Widget> rightColumn = <Widget>[
       transfer.isGenerateWallet() || transfer.isJoinCommunity()
           ? SizedBox.shrink()
@@ -61,18 +63,18 @@ class TransactionListItem extends StatelessWidget {
                   overflow: Overflow.visible,
                   alignment: AlignmentDirectional.bottomEnd,
                   children: <Widget>[
-                    new RichText(
-                        text: new TextSpan(children: <TextSpan>[
-                      new TextSpan(
+                    RichText(
+                        text: TextSpan(children: <TextSpan>[
+                      TextSpan(
                           text: deduceSign(transfer) +
                               formatValue(transfer.value, _vm.token.decimals),
-                          style: new TextStyle(
+                          style: TextStyle(
                               color: deduceColor(transfer),
                               fontSize: 15.0,
                               fontWeight: FontWeight.bold)),
-                      new TextSpan(
+                      TextSpan(
                           text: " $symbol",
-                          style: new TextStyle(
+                          style: TextStyle(
                               color: deduceColor(transfer),
                               fontSize: 10.0,
                               fontWeight: FontWeight.normal)),
@@ -101,7 +103,7 @@ class TransactionListItem extends StatelessWidget {
             )
     ];
     return Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: const Color(0xFFDCDCDC)))),
         child: ListTile(
           contentPadding: EdgeInsets.only(top: 8, bottom: 8, left: 0, right: 0),
@@ -140,9 +142,8 @@ class TransactionListItem extends StatelessWidget {
                                       backgroundColor:
                                           Color(0xFF49D88D).withOpacity(0),
                                       strokeWidth: 3,
-                                      valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              Color(0xFF49D88D).withOpacity(1)),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Color(0xFF49D88D).withOpacity(1)),
                                     ))
                                 : SizedBox.shrink(),
                             _vm.community.metadata.isDefaultImage != null &&
@@ -192,10 +193,10 @@ class TransactionListItem extends StatelessWidget {
                                   )
                                 : Text(
                                     isZeroAddress
-                                      ? I18n.of(context).received_from_ethereum
-                                      : isSendingToForeign
-                                        ? I18n.of(context).sent_to_ethereum
-                                        : displayName,
+                                        ? I18n.of(context).convert
+                                        : isSendingToForeign
+                                            ? I18n.of(context).sent_to_ethereum
+                                            : displayName,
                                     style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 15)),

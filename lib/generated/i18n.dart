@@ -252,6 +252,8 @@ class I18n implements WidgetsLocalizations {
   String get more_details => "More details";
   /// "Convert"
   String get convert => "Convert";
+  /// "Insufficient fund"
+  String get insufficient_fund => "Insufficient fund";
 }
 
 class _I18n_en_US extends I18n {

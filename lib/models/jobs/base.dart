@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:seedbed/models/jobs/approve_job.dart';
 import 'package:seedbed/models/jobs/backup_job.dart';
+import 'package:seedbed/models/jobs/convert_job.dart';
 import 'package:seedbed/models/jobs/generate_wallet_job.dart';
 import 'package:seedbed/models/jobs/invite_bonus_job.dart';
 import 'package:seedbed/models/jobs/invite_job.dart';
@@ -180,6 +181,15 @@ class JobFactory {
             arguments: json['arguments']);
       case 'approveToken':
         return new ApproveJob(
+            id: id,
+            jobType: jobType,
+            name: json['name'],
+            status: status,
+            data: json['data'],
+            lastFinishedAt: json['lastFinishedAt'],
+            arguments: json['arguments']);
+      case 'convertToken':
+        return new ConvertJob(
             id: id,
             jobType: jobType,
             name: json['name'],

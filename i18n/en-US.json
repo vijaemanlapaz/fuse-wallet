@@ -108,5 +108,6 @@
     "copy_to_clipboard": "Copy to clipboard",
     "copied_to_clipboard": "Copied to Clipboard",
     "more_details": "More details",
-    "convert": "Convert"
+    "convert": "Convert",
+    "insufficient_fund": "Insufficient fund"
 }

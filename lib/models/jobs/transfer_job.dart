@@ -63,7 +63,7 @@ class TransferJob extends Job {
       return;
     }
     this.status = 'DONE';
-    store.dispatch(sendTokenSuccessCall(job, arguments['transfer']));
+    store.dispatch(sendTokenSuccessCall(job.data['txHash'], arguments['transfer']));
     store.dispatch(segmentTrackCall('Wallet: job succeeded', properties: new Map<String, dynamic>.from({ 'id': id, 'name': name })));
   }
 
