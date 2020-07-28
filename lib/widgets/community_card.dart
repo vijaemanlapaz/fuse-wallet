@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:seedbed/models/community.dart';
 import 'dart:core';
-
 import 'package:seedbed/screens/routes.gr.dart';
-import 'package:seedbed/utils/transaction_row.dart';
 
 class CommunityCardScreen extends StatefulWidget {
   CommunityCardScreen(
