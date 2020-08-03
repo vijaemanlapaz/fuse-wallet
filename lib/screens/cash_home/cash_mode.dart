@@ -3,9 +3,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:roost/generated/i18n.dart';
 import 'package:roost/models/app_state.dart';
 import 'package:roost/models/views/bottom_bar.dart';
+import 'package:roost/redux/actions/cash_wallet_actions.dart';
 import 'package:roost/screens/buy/buy.dart';
 import 'package:roost/screens/cash_home/cash_header.dart';
 import 'package:roost/screens/cash_home/cash_home.dart';
+import 'package:roost/utils/addresses.dart';
 import 'package:roost/widgets/bottom_bar_item.dart';
 import 'package:roost/widgets/drawer.dart';
 import 'package:roost/widgets/my_app_bar.dart';
@@ -50,6 +52,14 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, BottomBarViewModel>(
         converter: BottomBarViewModel.fromStore,
+        onInit: (store) {
+          final communities = store.state.cashWalletState.communities;
+          String walletStatus = store.state.userState.walletStatus;
+          if (walletStatus == 'created' &&
+              !communities.containsKey(defaultCommunityAddress)) {
+            store.dispatch(switchCommunityCall(defaultCommunityAddress));
+          }
+        },
         builder: (_, vm) {
           final List<Widget> pages = _pages(vm.walletAddress);
           return TabsScaffold(

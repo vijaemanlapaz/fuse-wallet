@@ -387,8 +387,7 @@ ThunkAction initWeb3Call(
     try {
       logger.info('initWeb3. privateKey: $privateKey');
       wallet_core.Web3 web3 = new wallet_core.Web3(approvalCallback,
-          defaultCommunityAddress:
-              DotEnv().env['DEFAULT_COMMUNITY_CONTRACT_ADDRESS'],
+          defaultCommunityAddress: defaultCommunityAddress,
           communityManagerAddress: communityManagerAddress ??
               DotEnv().env['COMMUNITY_MANAGER_CONTRACT_ADDRESS'],
           transferManagerAddress: transferManagerAddress ??
