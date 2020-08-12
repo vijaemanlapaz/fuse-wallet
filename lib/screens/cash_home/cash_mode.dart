@@ -45,7 +45,7 @@ class _CashModeScaffoldState extends State<CashModeScaffold> {
         accountAddress: reserveContractAddress,
         avatar: NetworkImage(
             'https://cdn3.iconfinder.com/data/icons/abstract-1/512/no_image-512.png'),
-        name: 'Convetor',
+        name: 'Convertor',
       )),
       ReceiveScreen()
     ];

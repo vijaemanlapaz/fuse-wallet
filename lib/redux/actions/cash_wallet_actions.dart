@@ -287,7 +287,7 @@ ThunkAction enablePushNotifications() {
       void switchOnPush(message) {
         String communityAddress = communityAddressFromNotification(message);
         if (communityAddress != null && communityAddress.isNotEmpty) {
-          // store.dispatch(switchCommunityCall(communityAddress));
+          store.dispatch(switchCommunityCall(communityAddress));
         }
       }
 

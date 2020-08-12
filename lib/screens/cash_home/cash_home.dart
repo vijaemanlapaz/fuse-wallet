@@ -6,6 +6,7 @@ import 'package:seedbed/redux/actions/cash_wallet_actions.dart';
 import 'package:seedbed/models/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:seedbed/utils/addresses.dart';
 import 'cash_transactions.dart';
 import 'package:seedbed/models/views/cash_wallet.dart';
 
@@ -19,13 +20,22 @@ class CashHomeScreen extends StatelessWidget {
         accountAddress != '') {
       store.dispatch(createAccountWalletCall(accountAddress));
     }
+
+    final communities = store.state.cashWalletState.communities;
+    if (walletStatus == 'created' &&
+        !communities.containsKey(defaultCommunityAddress)) {
+      store.dispatch(switchCommunityCall(defaultCommunityAddress));
+    }
   }
 
   void onChange(CashWalletViewModel viewModel, BuildContext context) async {
     if (viewModel.isoCode == null) {
       Locale myLocale = Localizations.localeOf(context);
-      Map localeData = codes.firstWhere((Map code) => code['code'] == myLocale.countryCode, orElse: () => null);
-      viewModel.setCountyCode(CountryCode(dialCode: localeData['dial_code'], code: localeData['code']));
+      Map localeData = codes.firstWhere(
+          (Map code) => code['code'] == myLocale.countryCode,
+          orElse: () => null);
+      viewModel.setCountyCode(CountryCode(
+          dialCode: localeData['dial_code'], code: localeData['code']));
     }
     if (!viewModel.isJobProcessingStarted) {
       viewModel.startProcessingJobs();
