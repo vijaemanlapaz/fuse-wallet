@@ -6,7 +6,7 @@ import 'package:peepl/generated/i18n.dart';
 import 'package:peepl/models/app_state.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_code_picker/country_codes.dart';
-import 'package:peepl/utils/phone.dart';
+import 'package:peepl/services.dart';
 import 'package:peepl/widgets/main_scaffold.dart';
 import 'package:peepl/widgets/primary_button.dart';
 import 'package:peepl/widgets/signup_dialog.dart';
@@ -44,6 +44,18 @@ class _SignupScreenState extends State<SignupScreen> {
         });
       }
     }
+  }
+
+  void onPressed(Function(CountryCode, String) signUp) {
+    phoneNumberUtil
+        .parse('${countryCode.dialCode}${phoneController.text}')
+        .then((value) {
+      signUp(countryCode, phoneController.text);
+    }, onError: (e) {
+      setState(() {
+        isvalidPhone = false;
+      });
+    });
   }
 
   @override
@@ -85,7 +97,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               builder: (BuildContext context) {
                                 return SignupDialog();
                               });
-                          Segment.track(eventName: "Wallet: opened modal - why do we need this");
+                          Segment.track(
+                              eventName:
+                                  "Wallet: opened modal - why do we need this");
                         },
                         child: Center(
                           child: Text(
@@ -128,10 +142,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: CountryCodePicker(
                             onChanged: (_countryCode) {
                               countryCode = _countryCode;
-                              Segment.track(eventName: 'Wallet: country code selected', properties: new Map.from({
-                                'Dial code': _countryCode.dialCode,
-                                'County code': _countryCode.code,
-                              }));
+                              Segment.track(
+                                  eventName: 'Wallet: country code selected',
+                                  properties: new Map.from({
+                                    'Dial code': _countryCode.dialCode,
+                                    'County code': _countryCode.code,
+                                  }));
                             },
                             initialSelection: countryCode.code,
                             favorite: [],
@@ -147,21 +163,27 @@ class _SignupScreenState extends State<SignupScreen> {
                           height: 35,
                           width: 1,
                           color: const Color(0xFFc1c1c1),
-                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          margin:
+                              const EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
                         Expanded(
                           child: TextFormField(
                             controller: phoneController,
                             keyboardType: TextInputType.number,
                             autofocus: true,
-                            validator: (String value) => value.isEmpty ? "Please enter mobile number" : null,
+                            validator: (String value) => value.isEmpty
+                                ? "Please enter mobile number"
+                                : null,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 10),
                                 hintText: I18n.of(context).phoneNumber,
                                 border: InputBorder.none,
-                                focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-                                enabledBorder: OutlineInputBorder(borderSide: BorderSide.none)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none)),
                           ),
                         )
                       ],
@@ -178,22 +200,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           label: I18n.of(context).next_button,
                           fontSize: 16,
                           labelFontWeight: FontWeight.normal,
-                          onPressed: () async {
-                            try {
-                              bool isValid = await PhoneService.isValid(phoneController.text, countryCode.code);
-                              if (isValid) {
-                                viewModel.signUp(countryCode, phoneController.text);
-                              } else {
-                                setState(() {
-                                  isvalidPhone = false;
-                              });
-                              }
-                            } on PlatformException catch (e) {
-                              print(e);
-                              setState(() {
-                                isvalidPhone = false;
-                              });
-                            }
+                          onPressed: () {
+                            onPressed(viewModel.signUp);
                           },
                           preload: viewModel.isLoginRequest,
                         ),
