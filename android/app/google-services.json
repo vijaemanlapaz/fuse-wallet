@@ -1,42 +1,51 @@
 {
   "project_info": {
-    "project_number": "863692183597",
-    "firebase_url": "https://fuse-2-0.firebaseio.com",
-    "project_id": "fuse-2-0",
-    "storage_bucket": "fuse-2-0.appspot.com"
+    "project_number": "608525741791",
+    "firebase_url": "https://bitazza-wallet.firebaseio.com",
+    "project_id": "bitazza-wallet",
+    "storage_bucket": "bitazza-wallet.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:863692183597:android:0591105e8b1bb60b9b80a4",
+        "mobilesdk_app_id": "1:608525741791:android:e3eb08ea88d4afc40b036a",
         "android_client_info": {
-          "package_name": "io.fuse.fusecash"
+          "package_name": "com.bitazza.wallet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "863692183597-1i1k4s4f73ecldtf2pnnjnubqtkc5984.apps.googleusercontent.com",
+          "client_id": "608525741791-rsbtn8b92r91j0to6k6ip99h7g0g7al0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bitazza.wallet",
+            "certificate_hash": "e23d234e8f10b078b0096b6d0af3410985d869ee"
+          }
+        },
+        {
+          "client_id": "608525741791-flstmu8p2ln14a9ph5bbn4aofhurdb3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bitazza.wallet",
+            "certificate_hash": "5ccd23e788197eba42a2dafc65862c79b342dda6"
+          }
+        },
+        {
+          "client_id": "608525741791-j30u96dq7li0l8f2cqusoh2tpsa7qkmn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDvx56Wp3R5M4d0I1lwYc6fhgJy6dTFNPM"
+          "current_key": "AIzaSyATkNn_h-FkvCKD5Kuss4zwwxGRTMvgDuI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "863692183597-1i1k4s4f73ecldtf2pnnjnubqtkc5984.apps.googleusercontent.com",
+              "client_id": "608525741791-j30u96dq7li0l8f2cqusoh2tpsa7qkmn.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "863692183597-dj519lg1gf92k0d41a5pe94bio1k14v8.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.fuse.fusecash"
-              }
             }
           ]
         }

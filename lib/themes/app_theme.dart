@@ -31,8 +31,9 @@ class MyThemes {
   );
 
   static final ThemeData bitazza = getTheme().copyWith(
-    primaryColorLight: const Color(0xFF06DEA4),
+    primaryColorLight: Color(0xFF72d09e), //
     primaryColorDark: const Color(0xFF1077D8),
+    buttonColor: const Color(0xFF56a88c),
     textTheme: TextTheme(button: new TextStyle(color: Colors.white)),
   );
 
@@ -49,7 +50,7 @@ class MyThemes {
       case MyThemeKeys.WEPY:
         return wepyTheme;
       case MyThemeKeys.BITAZZA:
-        return wepyTheme;
+        return bitazza;
       default:
         return defaultTheme;
     }
